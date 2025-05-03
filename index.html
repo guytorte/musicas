@@ -3,49 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Músicas - Seu Nome</title>
+    <!-- SUBSTITUIR TÍTULO -->
+    <title>Músicas - [SEU NOME]</title>
+    
+    <!-- LINKS EXTERNOS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
     <link rel="manifest" href="manifest.json">
 </head>
 <body>
-    <!-- Seção de Perfil -->
+    <!-- SEÇÃO DE PERFIL - SUBSTITUIR CONTEÚDO -->
     <section class="profile">
-        <img src="foto-perfil.jpg" alt="Seu Nome" class="profile-img">
+        <!-- SUBSTITUIR FOTO (manter em 200x200px) -->
+        <img src="foto-perfil.jpg" 
+             alt="Foto de [SEU NOME]" 
+             class="profile-img"
+             loading="lazy">
+
         <div class="profile-info">
-            <h1>Seu Nome</h1>
-            <p class="bio">Composições que misturam soul contemporâneo com raízes brasileiras. Letras poéticas que falam de amor, existência e cotidiano.</p>
+            <!-- SEU NOME AQUI -->
+            <h1>[SEU NOME]</h1>
+            
+            <!-- BIO - SUBSTITUIR TEXTO -->
+            <p class="bio">
+                [SUA BIO AQUI] Ex: "Cantautor sertanejo com 10 anos de estrada. Letras que retratam o cotidiano com humor e paixão."
+            </p>
+
+            <!-- REDES SOCIAIS - SUBSTITUIR LINKS -->
             <div class="social-links">
-                <a href="https://wa.me/5511999999999" target="_blank" class="whatsapp">
+                <!-- LINK DO WHATSAPP -->
+                <a href="https://wa.me/[SEU_NUMERO]" 
+                   target="_blank" 
+                   class="whatsapp"
+                   aria-label="WhatsApp">
                     <i class="fab fa-whatsapp"></i>
                 </a>
-                <a href="https://instagram.com/seuinstagram" target="_blank" class="instagram">
+
+                <!-- LINK DO INSTAGRAM -->
+                <a href="https://instagram.com/[SEU_INSTAGRAM]" 
+                   target="_blank" 
+                   class="instagram"
+                   aria-label="Instagram">
                     <i class="fab fa-instagram"></i>
                 </a>
             </div>
         </div>
     </section>
 
-   <section class="featured">
-    <h2>Destaques</h2>
-    <div class="featured-grid" id="destaques"></div>
-</section>
+    <!-- DESTAQUES - LISTAGEM DINÂMICA VIA JS -->
+    <section class="featured">
+        <h2>Destaques</h2>
+        <!-- CONTAINER PARA MÚSICAS DESTACADAS -->
+        <div class="featured-grid" id="destaques">
+            <!-- CONTEÚDO SERÁ PREENCHIDO PELO JAVASCRIPT -->
+        </div>
+    </section>
 
-<section class="music-list">
-    <h2>Todas as Músicas</h2>
-    <div id="todas-musicas"></div>
-</section>
+    <!-- LISTA COMPLETA - LISTAGEM DINÂMICA VIA JS -->
+    <section class="music-list">
+        <h2>Todas as Músicas</h2>
+        <!-- CONTAINER PARA TODAS AS MÚSICAS -->
+        <div id="todas-musicas">
+            <!-- CONTEÚDO SERÁ PREENCHIDO PELO JAVASCRIPT -->
+        </div>
+    </section>
 
-    <!-- Player Fixo -->
-<div class="player">
-    <audio id="audioPlayer"></audio> <!-- Remova o atributo "controls" -->
-    <div class="controls">
-        <button id="playPause"><i class="fas fa-play"></i></button>
-        <input type="range" id="progress" value="0">
-        <button id="share"><i class="fas fa-share"></i></button>
+    <!-- PLAYER DE MÚSICA FIXO -->
+    <div class="player">
+        <audio id="audioPlayer"></audio>
+        <div class="controls">
+            <!-- BOTÃO PLAY/PAUSE -->
+            <button id="playPause" aria-label="Play/Pause">
+                <i class="fas fa-play"></i>
+            </button>
+            
+            <!-- BARRA DE PROGRESSO -->
+            <input type="range" 
+                   id="progress" 
+                   value="0"
+                   aria-label="Progresso da música">
+            
+            <!-- BOTÃO COMPARTILHAR -->
+            <button id="share" aria-label="Compartilhar">
+                <i class="fas fa-share"></i>
+            </button>
+        </div>
     </div>
-</div>
 
+    <!-- ELEMENTOS DE INTERFACE ADICIONAIS -->
+    <!-- OVERLAY DE CARREGAMENTO -->
+    <div id="loading-overlay" style="display: none;">
+        <div class="loading-spinner"></div>
+        <p class="loading-text"></p>
+    </div>
+
+    <!-- CONTAINER DE ERROS -->
+    <div class="error-container" style="display: none;"></div>
+
+    <!-- SCRIPTS -->
     <script src="script.js"></script>
 </body>
 </html>
