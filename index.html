@@ -1,157 +1,51 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <!-- METADADOS ESSENCIAIS -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Ouça e baixe as músicas de [SEU NOME]">
-    
-    <!-- TÍTULO DO SITE (ALTERE) -->
-    <title>[SEU NOME] | Músicas para ouvir e baixar</title>
-    
-    <!-- FAVICON (ADICIONE SEU ARQUIVO) -->
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-    
-    <!-- FONTE EXTERNA -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- CSS -->
+    <title>Músicas - Seu Nome</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
-    
-    <!-- MANIFEST PWA -->
     <link rel="manifest" href="manifest.json">
-    
-    <!-- COR PRIMÁRIA PARA NAVEGADORES -->
-    <meta name="theme-color" content="#6C5CE7">
 </head>
 <body>
-    <!-- SEÇÃO DE PERFIL -->
+    <!-- Seção de Perfil -->
     <section class="profile">
-        <!-- FOTO DE PERFIL (Substitua pelo seu arquivo) -->
-        <img src="foto-perfil.jpg" 
-             alt="Foto de [SEU NOME]" 
-             class="profile-img"
-             width="120"
-             height="120"
-             loading="lazy">
-        
+        <img src="foto-perfil.jpg" alt="Seu Nome" class="profile-img">
         <div class="profile-info">
-            <!-- SEU NOME (Substitua) -->
-            <h1>[SEU NOME]</h1>
-            
-            <!-- BIO (Substitua) -->
-            <p class="bio">
-                [SUA BIO AQUI] Exemplo: "Cantor e compositor de música sertaneja com 5 anos de carreira."
-            </p>
-            
-            <!-- REDES SOCIAIS (Substitua os links) -->
+            <h1>Seu Nome</h1>
+            <p class="bio">Composições que misturam soul contemporâneo com raízes brasileiras. Letras poéticas que falam de amor, existência e cotidiano.</p>
             <div class="social-links">
-                <a href="https://wa.me/SEUNUMERO" 
-                   target="_blank" 
-                   class="whatsapp"
-                   aria-label="WhatsApp">
+                <a href="https://wa.me/5511999999999" target="_blank" class="whatsapp">
                     <i class="fab fa-whatsapp"></i>
                 </a>
-                
-                <a href="https://instagram.com/SEUINSTAGRAM" 
-                   target="_blank" 
-                   class="instagram"
-                   aria-label="Instagram">
+                <a href="https://instagram.com/seuinstagram" target="_blank" class="instagram">
                     <i class="fab fa-instagram"></i>
                 </a>
-                
-                <a href="https://youtube.com/SEUCANAL" 
-                   target="_blank" 
-                   class="youtube"
-                   aria-label="YouTube">
-                    <i class="fab fa-youtube"></i>
-                </a>
             </div>
         </div>
     </section>
 
-    <!-- SEÇÃO DE DESTAQUES -->
-    <section class="featured">
-        <h2><i class="fas fa-star"></i> Destaques</h2>
-        <div class="featured-grid" id="destaques">
-            <!-- CONTEÚDO DINÂMICO VIA JavaScript -->
-        </div>
-    </section>
+   <section class="featured">
+    <h2>Destaques</h2>
+    <div class="featured-grid" id="destaques"></div>
+</section>
 
-    <!-- LISTA COMPLETA DE MÚSICAS -->
-    <section class="music-list">
-        <h2><i class="fas fa-music"></i> Todas as Músicas</h2>
-        <div id="todas-musicas">
-            <!-- CONTEÚDO DINÂMICO VIA JavaScript -->
-        </div>
-    </section>
+<section class="music-list">
+    <h2>Todas as Músicas</h2>
+    <div id="todas-musicas"></div>
+</section>
 
-    <!-- PLAYER DE MÚSICA FIXO -->
-    <div class="player">
-        <!-- ELEMENTO DE ÁUDIO (oculto) -->
-        <audio id="audioPlayer"></audio>
-        
-        <div class="controls">
-            <!-- BOTÃO PLAY/PAUSE -->
-            <button id="playPause" aria-label="Play/Pause">
-                <i class="fas fa-play"></i>
-            </button>
-            
-            <!-- INFORMAÇÕES DA MÚSICA ATUAL -->
-            <div class="now-playing">
-                <span id="currentSongTitle">Nenhuma música selecionada</span>
-                <div class="progress-container">
-                    <input type="range" 
-                           id="progress" 
-                           value="0"
-                           aria-label="Progresso da música">
-                    <span id="currentTime">0:00</span>
-                </div>
-            </div>
-            
-            <!-- BOTÕES ADICIONAIS -->
-            <div class="player-actions">
-                <button id="volumeControl" aria-label="Volume">
-                    <i class="fas fa-volume-up"></i>
-                </button>
-                <button id="share" aria-label="Compartilhar">
-                    <i class="fas fa-share-alt"></i>
-                </button>
-            </div>
-        </div>
+    <!-- Player Fixo -->
+<div class="player">
+    <audio id="audioPlayer"></audio> <!-- Remova o atributo "controls" -->
+    <div class="controls">
+        <button id="playPause"><i class="fas fa-play"></i></button>
+        <input type="range" id="progress" value="0">
+        <button id="share"><i class="fas fa-share"></i></button>
     </div>
+</div>
 
-    <!-- ELEMENTOS DE INTERFACE ADICIONAIS -->
-    
-    <!-- OVERLAY DE CARREGAMENTO -->
-    <div id="loading-overlay">
-        <div class="spinner"></div>
-        <p class="loading-text">Carregando...</p>
-    </div>
-    
-    <!-- MODAL DE ERRO -->
-    <div id="error-modal" class="hidden">
-        <div class="modal-content">
-            <i class="fas fa-exclamation-triangle"></i>
-            <h3 id="error-title">Erro</h3>
-            <p id="error-message"></p>
-            <button id="retry-button">Tentar novamente</button>
-        </div>
-    </div>
-
-    <!-- VOLUME SLIDER (oculto por padrão) -->
-    <div id="volume-slider" class="hidden">
-        <input type="range" 
-               id="volume" 
-               min="0" 
-               max="1" 
-               step="0.01" 
-               value="0.7"
-               aria-label="Controle de volume">
-    </div>
-
-    <!-- SCRIPTS -->
     <script src="script.js"></script>
 </body>
 </html>
