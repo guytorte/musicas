@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Músicas - Seu Nome</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+    <!-- Seção de Perfil -->
+    <section class="profile">
+        <img src="foto-perfil.jpg" alt="Seu Nome" class="profile-img">
+        <div class="profile-info">
+            <h1>Seu Nome</h1>
+            <p class="bio">Composições que misturam soul contemporâneo com raízes brasileiras. Letras poéticas que falam de amor, existência e cotidiano.</p>
+            <div class="social-links">
+                <a href="https://wa.me/5511999999999" target="_blank" class="whatsapp">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="https://instagram.com/seuinstagram" target="_blank" class="instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+   <section class="featured">
+    <h2>Destaques</h2>
+    <div class="featured-grid" id="destaques"></div>
+</section>
+
+<section class="music-list">
+    <h2>Todas as Músicas</h2>
+    <div id="todas-musicas"></div>
+</section>
+
+    <!-- Player Fixo -->
+<div class="player">
+    <audio id="audioPlayer"></audio> <!-- Remova o atributo "controls" -->
+    <div class="controls">
+        <button id="playPause"><i class="fas fa-play"></i></button>
+        <input type="range" id="progress" value="0">
+        <button id="share"><i class="fas fa-share"></i></button>
+    </div>
+</div>
+
+    <script src="script.js"></script>
+</body>
+</html>

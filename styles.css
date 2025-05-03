@@ -1,0 +1,276 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+:root {
+  --primary-color: #6C5CE7;
+  --secondary-color: #A8A5E6;
+  --background: #1A1A1A;
+  --text-color: #FFFFFF;
+  --card-bg: #2D2D2D;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: var(--background);
+  color: var(--text-color);
+  min-height: 100vh;
+  padding: 0 0 100px;
+}
+
+/* Seção de Perfil */
+.profile {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  margin: 20px;
+  background: var(--card-bg);
+  border-radius: 15px;
+  gap: 20px;
+}
+
+.profile-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--primary-color);
+}
+
+.profile-info {
+  flex: 1;
+}
+
+.bio {
+  font-size: 0.9rem;
+  color: var(--secondary-color);
+  margin: 10px 0;
+}
+
+.social-links {
+  display: flex;
+  gap: 15px;
+}
+
+.social-links a {
+  color: var(--text-color);
+  font-size: 1.5rem;
+  transition: transform 0.3s;
+}
+
+.social-links a:hover {
+  transform: translateY(-3px);
+}
+
+/* Músicas em Destaque */
+.featured {
+  padding: 20px;
+}
+
+.featured h2 {
+  margin-bottom: 20px;
+  padding-left: 10px;
+}
+
+.featured-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  padding: 0 15px;
+}
+
+.featured-item {
+  position: relative;
+  border-radius: 15px;
+  overflow: hidden;
+  aspect-ratio: 1;
+  cursor: pointer;
+}
+
+.featured-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 15px;
+}
+
+.genre-tag {
+  background: rgba(255,255,255,0.2);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  backdrop-filter: blur(5px);
+  width: fit-content;
+}
+
+/* Lista de Músicas */
+.music-list {
+  padding: 20px;
+}
+
+.music-item {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  margin: 10px 20px;
+  background: var(--card-bg);
+  border-radius: 12px;
+  gap: 15px;
+  transition: transform 0.2s;
+}
+
+.music-item:hover {
+  transform: translateY(-3px);
+}
+
+.thumbnail {
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.info {
+  flex: 1;
+}
+
+.title {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.genre {
+  font-size: 0.8rem;
+  color: var(--secondary-color);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.download-btn {
+  background: none;
+  border: none;
+  color: var(--secondary-color);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 5px;
+  transition: color 0.3s;
+}
+
+.download-btn:hover {
+  color: var(--primary-color);
+}
+
+.play-icon {
+  color: var(--primary-color);
+  font-size: 1.4rem;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.music-item:hover .play-icon {
+  opacity: 1;
+}
+
+/* Player Fixo */
+.player {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(44, 44, 44, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 15px 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+#progress {
+  flex-grow: 1;
+  height: 5px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+#progress::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: var(--primary-color);
+}
+
+#playPause {
+  background: var(--primary-color);
+  border: none;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+  .profile {
+    margin: 10px;
+    padding: 15px;
+  }
+  
+  .featured-grid {
+    gap: 10px;
+  }
+  
+  .music-item {
+    margin: 10px;
+    padding: 12px;
+  }
+  
+  .thumbnail {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@keyframes wave {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.playing {
+  animation: wave 1.5s infinite;
+}
