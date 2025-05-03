@@ -1,104 +1,155 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+    <!-- METADADOS ESSENCIAIS -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- SUBSTITUIR TÍTULO -->
-    <title>Músicas - [SEU NOME]</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Ouça e baixe as músicas de [SEU NOME]">
     
-    <!-- LINKS EXTERNOS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- TÍTULO DO SITE (ALTERE) -->
+    <title>[SEU NOME] | Músicas para ouvir e baixar</title>
+    
+    <!-- FAVICON (ADICIONE SEU ARQUIVO) -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    
+    <!-- FONTE EXTERNA -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS -->
     <link rel="stylesheet" href="styles.css">
+    
+    <!-- MANIFEST PWA -->
     <link rel="manifest" href="manifest.json">
+    
+    <!-- COR PRIMÁRIA PARA NAVEGADORES -->
+    <meta name="theme-color" content="#6C5CE7">
 </head>
 <body>
-    <!-- SEÇÃO DE PERFIL - SUBSTITUIR CONTEÚDO -->
+    <!-- SEÇÃO DE PERFIL -->
     <section class="profile">
-        <!-- SUBSTITUIR FOTO (manter em 200x200px) -->
+        <!-- FOTO DE PERFIL (Substitua pelo seu arquivo) -->
         <img src="foto-perfil.jpg" 
              alt="Foto de [SEU NOME]" 
              class="profile-img"
+             width="120"
+             height="120"
              loading="lazy">
-
+        
         <div class="profile-info">
-            <!-- SEU NOME AQUI -->
+            <!-- SEU NOME (Substitua) -->
             <h1>[SEU NOME]</h1>
             
-            <!-- BIO - SUBSTITUIR TEXTO -->
+            <!-- BIO (Substitua) -->
             <p class="bio">
-                [SUA BIO AQUI] Ex: "Cantautor sertanejo com 10 anos de estrada. Letras que retratam o cotidiano com humor e paixão."
+                [SUA BIO AQUI] Exemplo: "Cantor e compositor de música sertaneja com 5 anos de carreira."
             </p>
-
-            <!-- REDES SOCIAIS - SUBSTITUIR LINKS -->
+            
+            <!-- REDES SOCIAIS (Substitua os links) -->
             <div class="social-links">
-                <!-- LINK DO WHATSAPP -->
-                <a href="https://wa.me/[SEU_NUMERO]" 
+                <a href="https://wa.me/SEUNUMERO" 
                    target="_blank" 
                    class="whatsapp"
                    aria-label="WhatsApp">
                     <i class="fab fa-whatsapp"></i>
                 </a>
-
-                <!-- LINK DO INSTAGRAM -->
-                <a href="https://instagram.com/[SEU_INSTAGRAM]" 
+                
+                <a href="https://instagram.com/SEUINSTAGRAM" 
                    target="_blank" 
                    class="instagram"
                    aria-label="Instagram">
                     <i class="fab fa-instagram"></i>
                 </a>
+                
+                <a href="https://youtube.com/SEUCANAL" 
+                   target="_blank" 
+                   class="youtube"
+                   aria-label="YouTube">
+                    <i class="fab fa-youtube"></i>
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- DESTAQUES - LISTAGEM DINÂMICA VIA JS -->
+    <!-- SEÇÃO DE DESTAQUES -->
     <section class="featured">
-        <h2>Destaques</h2>
-        <!-- CONTAINER PARA MÚSICAS DESTACADAS -->
+        <h2><i class="fas fa-star"></i> Destaques</h2>
         <div class="featured-grid" id="destaques">
-            <!-- CONTEÚDO SERÁ PREENCHIDO PELO JAVASCRIPT -->
+            <!-- CONTEÚDO DINÂMICO VIA JavaScript -->
         </div>
     </section>
 
-    <!-- LISTA COMPLETA - LISTAGEM DINÂMICA VIA JS -->
+    <!-- LISTA COMPLETA DE MÚSICAS -->
     <section class="music-list">
-        <h2>Todas as Músicas</h2>
-        <!-- CONTAINER PARA TODAS AS MÚSICAS -->
+        <h2><i class="fas fa-music"></i> Todas as Músicas</h2>
         <div id="todas-musicas">
-            <!-- CONTEÚDO SERÁ PREENCHIDO PELO JAVASCRIPT -->
+            <!-- CONTEÚDO DINÂMICO VIA JavaScript -->
         </div>
     </section>
 
     <!-- PLAYER DE MÚSICA FIXO -->
     <div class="player">
+        <!-- ELEMENTO DE ÁUDIO (oculto) -->
         <audio id="audioPlayer"></audio>
+        
         <div class="controls">
             <!-- BOTÃO PLAY/PAUSE -->
             <button id="playPause" aria-label="Play/Pause">
                 <i class="fas fa-play"></i>
             </button>
             
-            <!-- BARRA DE PROGRESSO -->
-            <input type="range" 
-                   id="progress" 
-                   value="0"
-                   aria-label="Progresso da música">
+            <!-- INFORMAÇÕES DA MÚSICA ATUAL -->
+            <div class="now-playing">
+                <span id="currentSongTitle">Nenhuma música selecionada</span>
+                <div class="progress-container">
+                    <input type="range" 
+                           id="progress" 
+                           value="0"
+                           aria-label="Progresso da música">
+                    <span id="currentTime">0:00</span>
+                </div>
+            </div>
             
-            <!-- BOTÃO COMPARTILHAR -->
-            <button id="share" aria-label="Compartilhar">
-                <i class="fas fa-share"></i>
-            </button>
+            <!-- BOTÕES ADICIONAIS -->
+            <div class="player-actions">
+                <button id="volumeControl" aria-label="Volume">
+                    <i class="fas fa-volume-up"></i>
+                </button>
+                <button id="share" aria-label="Compartilhar">
+                    <i class="fas fa-share-alt"></i>
+                </button>
+            </div>
         </div>
     </div>
 
     <!-- ELEMENTOS DE INTERFACE ADICIONAIS -->
+    
     <!-- OVERLAY DE CARREGAMENTO -->
-    <div id="loading-overlay" style="display: none;">
-        <div class="loading-spinner"></div>
-        <p class="loading-text"></p>
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+        <p class="loading-text">Carregando...</p>
+    </div>
+    
+    <!-- MODAL DE ERRO -->
+    <div id="error-modal" class="hidden">
+        <div class="modal-content">
+            <i class="fas fa-exclamation-triangle"></i>
+            <h3 id="error-title">Erro</h3>
+            <p id="error-message"></p>
+            <button id="retry-button">Tentar novamente</button>
+        </div>
     </div>
 
-    <!-- CONTAINER DE ERROS -->
-    <div class="error-container" style="display: none;"></div>
+    <!-- VOLUME SLIDER (oculto por padrão) -->
+    <div id="volume-slider" class="hidden">
+        <input type="range" 
+               id="volume" 
+               min="0" 
+               max="1" 
+               step="0.01" 
+               value="0.7"
+               aria-label="Controle de volume">
+    </div>
 
     <!-- SCRIPTS -->
     <script src="script.js"></script>
