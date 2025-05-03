@@ -1,8 +1,6 @@
-// Service Worker v3 - Core Caching Only
-const CACHE_VERSION = 'v3';
-const CACHE_NAME = `music-player-core-${CACHE_VERSION}`;
+// sw.js — Service Worker for Music App
 
-// Core assets to cache (update when files change)
+const CACHE_NAME = 'music-app-v1';
 const CORE_ASSETS = [
   '/',
   '/index.html',
@@ -12,43 +10,45 @@ const CORE_ASSETS = [
   '/musicas.json'
 ];
 
-// Install - Cache core assets
-self.addEventListener('install', (event) => {
+// Identify media requests by URL path
+function isMediaRequest(request) {
+  return request.url.includes('/audio/') ||
+         request.url.includes('/thumb/') ||
+         request.url.includes('/capa/');
+}
+
+self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache => {
-        console.log('[SW] Caching core assets');
-        return cache.addAll(CORE_ASSETS);
-      })
-      .then(() => self.skipWaiting())
+      .then(cache => cache.addAll(CORE_ASSETS))
   );
+  self.skipWaiting();
 });
 
-// Activate - Clean old caches
-self.addEventListener('activate', (event) => {
+self.addEventListener('activate', event => {
   event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(cache => {
-          if (cache !== CACHE_NAME) {
-            console.log('[SW] Removing old cache:', cache);
-            return caches.delete(cache);
-          }
-        })
-      );
-    })
-    .then(() => self.clients.claim())
+    caches.keys().then(keys =>
+      Promise.all(
+        keys
+          .filter(key => key !== CACHE_NAME)
+          .map(key => caches.delete(key))
+      )
+    )
   );
+  self.clients.claim();
 });
 
-// Fetch - Cache-first for core, network-first for others
-self.addEventListener('fetch', (event) => {
+self.addEventListener('fetch', event => {
   const { request } = event;
-
-  // Skip non-GET requests
   if (request.method !== 'GET') return;
 
-  // Cache-first for core assets
+  // 1) Bypass media files entirely—let browser handle them
+  if (isMediaRequest(request)) {
+    event.respondWith(fetch(request));
+    return;
+  }
+
+  // 2) Cache-first strategy for core assets
   if (CORE_ASSETS.some(asset => request.url.endsWith(asset))) {
     event.respondWith(
       caches.match(request)
@@ -57,31 +57,17 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Network-first for other requests
+  // 3) Network-first for all other GET requests
   event.respondWith(
     fetch(request)
       .then(response => {
-        // Cache dynamic content (except media)
-        if (response.ok && !isMediaRequest(request)) {
-          const clone = response.clone();
-          caches.open(CACHE_NAME)
-            .then(cache => cache.put(request, clone));
+        if (response.ok) {
+          // Dynamically cache successful responses
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(request, copy));
         }
         return response;
       })
       .catch(() => caches.match(request))
   );
-});
-
-// Helper - Check if request is for media
-function isMediaRequest(request) {
-  const mediaPaths = ['/audio/', '/thumb/', '/capa/'];
-  return mediaPaths.some(path => request.url.includes(path));
-}
-
-// Message handling
-self.addEventListener('message', (event) => {
-  if (event.data.action === 'skipWaiting') {
-    self.skipWaiting();
-  }
 });
