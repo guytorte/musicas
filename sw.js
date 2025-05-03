@@ -1,77 +1,85 @@
-const CACHE_NAME = 'music-player-v6';
-const DYNAMIC_CACHE = 'dynamic-music-cache-v1';
-const ASSETS = [
+// Service Worker v3 - Core Caching Only
+const CACHE_VERSION = 'v3';
+const CACHE_NAME = `music-player-core-${CACHE_VERSION}`;
+
+// Core assets to cache (update when files change)
+const CORE_ASSETS = [
   '/',
   '/index.html',
   '/styles.css',
   '/script.js',
-  '/musicas.json',
-  '/icons/icon-72x72.png',
-  '/icons/icon-192x192.png',
-  '/icons/icon-512x512.png',
-  '/fallback.json'
+  '/manifest.json',
+  '/musicas.json'
 ];
 
-// Estratégia: Cache First, com fallback
+// Install - Cache core assets
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
-        console.log('Cache instalado');
-        return cache.addAll(ASSETS);
+        console.log('[SW] Caching core assets');
+        return cache.addAll(CORE_ASSETS);
       })
       .then(() => self.skipWaiting())
   );
 });
 
+// Activate - Clean old caches
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then(keys => {
+    caches.keys().then(cacheNames => {
       return Promise.all(
-        keys.filter(key => key !== CACHE_NAME && key !== DYNAMIC_CACHE)
-          .map(key => caches.delete(key))
+        cacheNames.map(cache => {
+          if (cache !== CACHE_NAME) {
+            console.log('[SW] Removing old cache:', cache);
+            return caches.delete(cache);
+          }
+        })
       );
-    }).then(() => self.clients.claim())
+    })
+    .then(() => self.clients.claim())
   );
 });
 
+// Fetch - Cache-first for core, network-first for others
 self.addEventListener('fetch', (event) => {
   const { request } = event;
-  const url = new URL(request.url);
 
-  // Estratégia para arquivos de mídia
-  if (request.url.includes('/audio/') || request.url.includes('/images/')) {
+  // Skip non-GET requests
+  if (request.method !== 'GET') return;
+
+  // Cache-first for core assets
+  if (CORE_ASSETS.some(asset => request.url.endsWith(asset))) {
     event.respondWith(
-      caches.match(request).then(cachedResponse => {
-        return cachedResponse || fetch(request).then(response => {
-          return caches.open(DYNAMIC_CACHE).then(cache => {
-            cache.put(request, response.clone());
-            return response;
-          });
-        }).catch(() => {
-          if (request.url.includes('/audio/')) {
-            return caches.match('/audio/fallback.mp3');
-          }
-          return caches.match('/images/fallback.jpg');
-        });
-      })
+      caches.match(request)
+        .then(cached => cached || fetch(request))
     );
     return;
   }
 
-  // Para outros recursos
+  // Network-first for other requests
   event.respondWith(
-    caches.match(request).then(cachedResponse => {
-      return cachedResponse || fetch(request).catch(() => {
-        if (request.headers.get('accept').includes('text/html')) {
-          return caches.match('/offline.html');
+    fetch(request)
+      .then(response => {
+        // Cache dynamic content (except media)
+        if (response.ok && !isMediaRequest(request)) {
+          const clone = response.clone();
+          caches.open(CACHE_NAME)
+            .then(cache => cache.put(request, clone));
         }
-      });
-    })
+        return response;
+      })
+      .catch(() => caches.match(request))
   );
 });
 
-// Atualização em segundo plano
+// Helper - Check if request is for media
+function isMediaRequest(request) {
+  const mediaPaths = ['/audio/', '/thumb/', '/capa/'];
+  return mediaPaths.some(path => request.url.includes(path));
+}
+
+// Message handling
 self.addEventListener('message', (event) => {
   if (event.data.action === 'skipWaiting') {
     self.skipWaiting();
