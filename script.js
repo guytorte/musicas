@@ -1,12 +1,7 @@
-
-
-/* script.js */
-// Simplified version: use a placeholder for covers/thumbs
-
 const PLACEHOLDER = 'placeholder.png'; // path to your placeholder image
 
 window.addEventListener('DOMContentLoaded', () => {
-fetch('./musicas.json')
+fetch('musicas.json')
 .then(res => res.json())
 .then(data => renderizarMusicas(data))
 .catch(err => console.error('Erro ao carregar JSON:', err));
@@ -54,4 +49,3 @@ const player = document.getElementById('audioPlayer');
 player.src = audio/${src};
 player.play();
 }
-
