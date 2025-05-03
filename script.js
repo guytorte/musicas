@@ -1,214 +1,259 @@
-// Configurações globais
+/**
+ * CONFIGURAÇÕES GERAIS
+ * ----------------------------------------------------
+ * - Controles globais do player
+ * - Elementos DOM essenciais
+ * - Constantes reutilizáveis
+ */
 const audio = new Audio();
 let currentTrack = null;
 let isPlaying = false;
-const playPauseBtn = document.getElementById('playPause');
-const progress = document.getElementById('progress');
-const volumeControl = document.getElementById('volume');
-
-// Elementos DOM
-const destaquesContainer = document.getElementById('destaques');
-const musicasContainer = document.getElementById('todas-musicas');
-
-// Constantes
-const ERROR_MESSAGE = {
-  NETWORK: 'Erro de conexão. Verifique sua internet.',
-  FORMAT: 'Formato de arquivo inválido.',
-  NOT_FOUND: 'Músicas não encontradas.'
+const UI = {
+  playPause: document.getElementById('playPause'),
+  progress: document.getElementById('progress'),
+  volume: document.getElementById('volume'),
+  destaques: document.getElementById('destaques'),
+  todasMusicas: document.getElementById('todas-musicas'),
+  loading: {
+    overlay: document.getElementById('loading-overlay'),
+    text: document.querySelector('.loading-text')
+  },
+  errorContainer: document.querySelector('.error-container')
 };
 
-// Função para carregar músicas
-const carregarMusicas = async () => {
+const PATH = {
+  audio: 'audio/',
+  thumb: 'thumb/',
+  capa: 'capa/'
+};
+
+const ERROR = {
+  NETWORK: '⚠️ Erro de conexão',
+  LOAD: '❌ Falha ao carregar músicas',
+  PLAY: '❌ Erro na reprodução'
+};
+
+/**
+ * CARREGAMENTO INICIAL
+ * ----------------------------------------------------
+ * - Fetch das músicas
+ * - Tratamento de erros
+ * - Inicialização do Service Worker
+ */
+document.addEventListener('DOMContentLoaded', async () => {
   try {
-    showLoading(true);
-    
-    const response = await fetch('musicas.json');
-    if (!response.ok) throw new Error(ERROR_MESSAGE.NETWORK);
-    
-    const data = await response.json();
-    if (!data.todas?.length) throw new Error(ERROR_MESSAGE.NOT_FOUND);
-
-    renderizarMusicas(data);
-    showLoading(false);
-
+    showLoading(true, 'Carregando catálogo...');
+    await setupServiceWorker();
+    await loadMusicData();
   } catch (error) {
-    console.error('Erro:', error);
-    showError(error.message);
-    showLoading(false);
-  }
-};
-
-// Renderização otimizada
-const renderizarMusicas = (data) => {
-  destaquesContainer.innerHTML = data.destaques?.map(criarCardDestaque).join('') || '';
-  musicasContainer.innerHTML = data.todas.map(criarCardMusica).join('');
-
-  requestAnimationFrame(() => {
-    adicionarEventos();
-    initIntersectionObserver();
-  });
-};
-
-// Templates de cards
-const criarCardDestaque = (musica) => `
-  <div class="featured-item" data-src="${musica.arquivo}" data-id="${musica.id}">
-    <img src="${musica.capa}" alt="${musica.titulo}" 
-         loading="lazy" onerror="this.src='fallback-image.jpg'">
-    <div class="overlay">
-      <i class="fas fa-play"></i>
-      <span class="genre-tag">${musica.genero}</span>
-    </div>
-    <div class="featured-info">
-      <h3>${musica.titulo}</h3>
-      ${musica.duracao ? `<span class="duration">${musica.duracao}</span>` : ''}
-    </div>
-  </div>
-`;
-
-const criarCardMusica = (musica) => `
-  <div class="music-item" data-src="${musica.arquivo}" data-id="${musica.id}">
-    <img src="${musica.thumbnail}" class="thumbnail" 
-         alt="${musica.titulo}" loading="lazy"
-         onerror="this.src='fallback-thumb.jpg'">
-    <div class="info">
-      <span class="title">${musica.titulo}</span>
-      <span class="genre">${musica.genero}</span>
-    </div>
-    <div class="actions">
-      <button class="download-btn" aria-label="Baixar">
-        <i class="fas fa-download"></i>
-      </button>
-      <i class="fas fa-play play-icon"></i>
-    </div>
-  </div>
-`;
-
-// Controles de áudio melhorados
-const playTrack = async (src, trackId) => {
-  try {
-    if (currentTrack === trackId && !audio.paused) {
-      audio.pause();
-      return;
-    }
-
-    showLoading(true, 'Carregando música...');
-    
-    audio.src = src;
-    await audio.play();
-    
-    currentTrack = trackId;
-    isPlaying = true;
-    updatePlayButton();
-    highlightCurrentTrack(trackId);
-
-  } catch (error) {
-    console.error('Erro na reprodução:', error);
-    showError('Não foi possível reproduzir a música');
+    showError(ERROR.LOAD, error.message);
   } finally {
     showLoading(false);
   }
-};
+});
 
-const togglePlay = () => {
-  if (!currentTrack) return;
+/**
+ * FUNÇÕES PRINCIPAIS
+ * ----------------------------------------------------
+ */
 
-  if (audio.paused) {
-    audio.play().catch(error => {
-      console.error('Erro ao retomar:', error);
-      showError('Erro ao retomar reprodução');
-    });
-  } else {
-    audio.pause();
+// Carrega dados do JSON
+async function loadMusicData() {
+  try {
+    const response = await fetch('musicas.json');
+    if (!response.ok) throw new Error(ERROR.NETWORK);
+    
+    const { musicas } = await response.json();
+    if (!musicas?.length) throw new Error('Nenhuma música encontrada');
+
+    renderMusicList(musicas);
+    initPlayerControls();
+
+  } catch (error) {
+    throw new Error(`${ERROR.LOAD}: ${error.message}`);
   }
-  
-  isPlaying = !audio.paused;
-  updatePlayButton();
-};
+}
 
-// Atualizações de UI
-const updatePlayButton = () => {
-  playPauseBtn.innerHTML = isPlaying 
-    ? '<i class="fas fa-pause"></i>' 
-    : '<i class="fas fa-play"></i>';
-};
+// Renderiza a lista de músicas
+function renderMusicList(musicas) {
+  UI.destaques.innerHTML = musicas
+    .filter(m => m.destaque)
+    .map(createFeaturedCard)
+    .join('');
 
-const highlightCurrentTrack = (trackId) => {
-  document.querySelectorAll('.playing').forEach(el => el.classList.remove('playing'));
-  const currentElement = document.querySelector(`[data-id="${trackId}"]`);
-  if (currentElement) {
-    currentElement.classList.add('playing');
-    currentElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  UI.todasMusicas.innerHTML = musicas
+    .map(createMusicCard)
+    .join('');
+}
+
+// Controles do player
+async function playTrack(trackData) {
+  try {
+    showLoading(true, 'Preparando música...');
+    
+    if (currentTrack?.id === trackData.id) {
+      togglePlayState();
+      return;
+    }
+
+    audio.src = `${PATH.audio}${trackData.arquivo}`;
+    await audio.play();
+    
+    currentTrack = trackData;
+    isPlaying = true;
+    updatePlayerUI();
+    highlightCurrentTrack(trackData.id);
+
+  } catch (error) {
+    showError(ERROR.PLAY, error.message);
+  } finally {
+    showLoading(false);
   }
-};
+}
 
-// Otimizações de performance
-const initIntersectionObserver = () => {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const img = entry.target;
-        img.src = img.dataset.src;
-        observer.unobserve(img);
-      }
-    });
-  }, { rootMargin: '100px' });
+/**
+ * FUNÇÕES AUXILIARES
+ * ----------------------------------------------------
+ */
 
-  document.querySelectorAll('img[loading="lazy"]').forEach(img => {
-    img.dataset.src = img.src;
-    img.src = '';
-    observer.observe(img);
-  });
-};
+// Cria card de destaque
+function createFeaturedCard(musica) {
+  return `
+    <div class="featured-item" 
+         data-id="${musica.id}" 
+         onclick="playTrack(${JSON.stringify(musica)})">
+      <img src="${PATH.capa}${musica.capa}" 
+           alt="${musica.titulo}"
+           loading="lazy"
+           onerror="this.src='fallback-capa.jpg'">
+      <div class="overlay">
+        <i class="fas fa-play"></i>
+        <span class="genre-tag">${musica.genero}</span>
+      </div>
+      <h3>${musica.titulo}</h3>
+    </div>
+  `;
+}
 
-// Sistema de erro melhorado
-const showError = (message) => {
-  musicasContainer.innerHTML = `
-    <div class="error-container">
-      <div class="error-content">
-        <i class="fas fa-exclamation-circle"></i>
-        <h3>${message}</h3>
-        <button onclick="window.location.reload()">Tentar novamente</button>
+// Cria card padrão
+function createMusicCard(musica) {
+  return `
+    <div class="music-item" 
+         data-id="${musica.id}" 
+         onclick="playTrack(${JSON.stringify(musica)})">
+      <img src="${PATH.thumb}${musica.thumbnail}" 
+           class="thumbnail" 
+           alt="${musica.titulo}"
+           loading="lazy"
+           onerror="this.src='fallback-thumb.jpg'">
+      <div class="info">
+        <span class="title">${musica.titulo}</span>
+        <span class="genre">${musica.genero}</span>
+      </div>
+      <div class="actions">
+        <button class="download-btn" 
+                onclick="downloadTrack('${musica.arquivo}')"
+                aria-label="Baixar ${musica.titulo}">
+          <i class="fas fa-download"></i>
+        </button>
       </div>
     </div>
   `;
-};
+}
 
-const showLoading = (show, text = 'Carregando...') => {
-  const loader = document.getElementById('loading-overlay') || createLoader();
-  loader.querySelector('.loading-text').textContent = text;
-  loader.style.display = show ? 'flex' : 'none';
-};
+// Atualiza a UI do player
+function updatePlayerUI() {
+  UI.playPause.innerHTML = isPlaying 
+    ? '<i class="fas fa-pause"></i>' 
+    : '<i class="fas fa-play"></i>';
+}
 
-const createLoader = () => {
-  const loader = document.createElement('div');
-  loader.id = 'loading-overlay';
-  loader.innerHTML = `
-    <div class="loading-spinner"></div>
-    <p class="loading-text"></p>
-  `;
-  document.body.appendChild(loader);
-  return loader;
-};
+/**
+ * GERENCIAMENTO DE EVENTOS
+ * ----------------------------------------------------
+ */
 
-// Inicialização otimizada
-document.addEventListener('DOMContentLoaded', () => {
-  carregarMusicas();
-  setupServiceWorker();
-});
+function initPlayerControls() {
+  // Play/Pause
+  UI.playPause.addEventListener('click', () => {
+    isPlaying = !isPlaying;
+    if (isPlaying) audio.play();
+    else audio.pause();
+    updatePlayerUI();
+  });
 
-const setupServiceWorker = () => {
+  // Barra de progresso
+  audio.addEventListener('timeupdate', () => {
+    UI.progress.value = (audio.currentTime / audio.duration) * 100 || 0;
+  });
+
+  UI.progress.addEventListener('input', (e) => {
+    audio.currentTime = (e.target.value / 100) * audio.duration;
+  });
+
+  // Compartilhamento
+  document.getElementById('share').addEventListener('click', () => {
+    if (navigator.share) {
+      navigator.share({
+        title: currentTrack.titulo,
+        text: `Ouça "${currentTrack.titulo}" por ${document.querySelector('h1').textContent}`,
+        url: window.location.href
+      });
+    } else {
+      alert('Recurso de compartilhamento não suportado');
+    }
+  });
+}
+
+/**
+ * UTILITÁRIOS
+ * ----------------------------------------------------
+ */
+
+// Download de músicas
+function downloadTrack(filename) {
+  const link = document.createElement('a');
+  link.href = `${PATH.audio}${filename}`;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+// Service Worker
+async function setupServiceWorker() {
   if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker
-        .register('sw.js')
-        .then(registration => {
-          registration.update();
-          console.log('SW registrado:', registration);
-        })
-        .catch(err => console.error('SW falhou:', err));
-    });
+    try {
+      const registration = await navigator.serviceWorker.register('sw.js');
+      registration.update();
+      console.log('Service Worker registrado');
+    } catch (error) {
+      console.error('Falha no SW:', error);
+    }
   }
-};
+}
 
-// Restante das funções mantidas com melhorias
-// (updateProgress, seekAudio, setVolume, downloadTrack)
+// Feedback visual
+function showLoading(show, text = 'Carregando...') {
+  UI.loading.overlay.style.display = show ? 'flex' : 'none';
+  UI.loading.text.textContent = text;
+}
+
+function showError(title, message = '') {
+  UI.errorContainer.innerHTML = `
+    <div class="error-message">
+      <i class="fas fa-exclamation-triangle"></i>
+      <h3>${title}</h3>
+      ${message && `<p>${message}</p>`}
+      <button onclick="window.location.reload()">Tentar novamente</button>
+    </div>
+  `;
+  UI.errorContainer.style.display = 'block';
+}
+
+// Highlight da música atual
+function highlightCurrentTrack(trackId) {
+  document.querySelectorAll('[data-id]').forEach(el => {
+    el.classList.toggle('playing', el.dataset.id === trackId);
+  });
+}
