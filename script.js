@@ -49,10 +49,10 @@ const renderizarMusicas = (data) => {
   });
 };
 
-// Templates de cards
+// Templates de cards com caminhos corrigidos
 const criarCardDestaque = (musica) => `
-  <div class="featured-item" data-src="${musica.arquivo}" data-id="${musica.id}">
-    <img src="${musica.capa}" alt="${musica.titulo}" 
+  <div class="featured-item" data-src="/audio/${musica.arquivo}" data-id="${musica.id}">
+    <img src="/capas/${musica.capa}" alt="${musica.titulo}" 
          loading="lazy" onerror="this.src='fallback-image.jpg'">
     <div class="overlay">
       <i class="fas fa-play"></i>
@@ -66,8 +66,8 @@ const criarCardDestaque = (musica) => `
 `;
 
 const criarCardMusica = (musica) => `
-  <div class="music-item" data-src="${musica.arquivo}" data-id="${musica.id}">
-    <img src="${musica.thumbnail}" class="thumbnail" 
+  <div class="music-item" data-src="/audio/${musica.arquivo}" data-id="${musica.id}">
+    <img src="/thumb/${musica.thumbnail}" class="thumbnail" 
          alt="${musica.titulo}" loading="lazy"
          onerror="this.src='fallback-thumb.jpg'">
     <div class="info">
@@ -107,6 +107,19 @@ const playTrack = async (src, trackId) => {
   } finally {
     showLoading(false);
   }
+};
+
+// Função de eventos adicionada
+const adicionarEventos = () => {
+  document.querySelectorAll('.featured-item, .music-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const src = item.dataset.src;
+      const id = item.dataset.id;
+      playTrack(src, id);
+    });
+  });
+
+  playPauseBtn.addEventListener('click', togglePlay);
 };
 
 const togglePlay = () => {
@@ -210,5 +223,5 @@ const setupServiceWorker = () => {
   }
 };
 
-// Restante das funções mantidas com melhorias
-// (updateProgress, seekAudio, setVolume, downloadTrack)
+// Restante das funções (progresso, volume, etc.)
+// ... (mantenha as funções restantes se existirem)
