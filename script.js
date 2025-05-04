@@ -206,41 +206,33 @@ function initPlayerControls() {
 }
 
 /**
+/**
  * UTILITÁRIOS
  * ----------------------------------------------------
  */
 
-// Download de músicas
-function downloadTrack(filename) {
-  const link = document.createElement('a');
-  link.href = `${PATH.audio}${filename}`;
-  link.download = filename;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-}
-
-// Service Worker
-async function setupServiceWorker() {
-  if ('serviceWorker' in navigator) {
-    try {
-      const registration = await navigator.serviceWorker.register('sw.js');
-      registration.update();
-      console.log('Service Worker registrado');
-    } catch (error) {
-      console.error('Falha no SW:', error);
-    }
-  }
+// Verificação de elementos na inicialização
+function initUIElements() {
+  UI.loading.overlay = document.getElementById('loading-overlay');
+  UI.loading.text = document.querySelector('.loading-text');
+  UI.errorContainer = document.querySelector('.error-container');
 }
 
 // Feedback visual
 function showLoading(show, text = 'Carregando...') {
+  if (!UI.loading.overlay) {
+    console.error('Elemento loading-overlay não encontrado');
+    return;
+  }
+  
   UI.loading.overlay.style.display = show ? 'flex' : 'none';
-  UI.loading.text.textContent = text;
+  if (UI.loading.text) {
+    UI.loading.text.textContent = text;
+  }
 }
 
 function showError(title, message = '') {
-  UI.errorContainer.innerHTML = `
+  const errorHTML = `
     <div class="error-message">
       <i class="fas fa-exclamation-triangle"></i>
       <h3>${title}</h3>
@@ -248,7 +240,15 @@ function showError(title, message = '') {
       <button onclick="window.location.reload()">Tentar novamente</button>
     </div>
   `;
-  UI.errorContainer.style.display = 'block';
+  
+  if (UI.errorContainer) {
+    UI.errorContainer.innerHTML = errorHTML;
+    UI.errorContainer.style.display = 'block';
+  } else {
+    const fallbackError = document.createElement('div');
+    fallbackError.innerHTML = errorHTML;
+    document.body.appendChild(fallbackError);
+  }
 }
 
 // Highlight da música atual
@@ -257,3 +257,21 @@ function highlightCurrentTrack(trackId) {
     el.classList.toggle('playing', el.dataset.id === trackId);
   });
 }
+
+/**
+ * INICIALIZAÇÃO
+ * ----------------------------------------------------
+ */
+document.addEventListener('DOMContentLoaded', () => {
+  initUIElements(); // Primeiro inicializa os elementos
+  
+  try {
+    showLoading(true, 'Carregando catálogo...');
+    setupServiceWorker();
+    loadMusicData();
+  } catch (error) {
+    showError('Erro inicial', error.message);
+  } finally {
+    showLoading(false);
+  }
+});
