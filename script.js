@@ -1,9 +1,6 @@
 /**
  * CONFIGURAÇÕES GERAIS
  * ----------------------------------------------------
- * - Controles globais do player
- * - Elementos DOM essenciais
- * - Constantes reutilizáveis
  */
 const audio = new Audio();
 let currentTrack = null;
@@ -11,7 +8,6 @@ let isPlaying = false;
 const UI = {
   playPause: document.getElementById('playPause'),
   progress: document.getElementById('progress'),
-  volume: document.getElementById('volume'),
   destaques: document.getElementById('destaques'),
   todasMusicas: document.getElementById('todas-musicas'),
   loading: {
@@ -34,30 +30,32 @@ const ERROR = {
 };
 
 /**
- * CARREGAMENTO INICIAL
+ * SERVICE WORKER
  * ----------------------------------------------------
- * - Fetch das músicas
- * - Tratamento de erros
- * - Inicialização do Service Worker
  */
-document.addEventListener('DOMContentLoaded', async () => {
-  try {
-    showLoading(true, 'Carregando catálogo...');
-    await setupServiceWorker();
-    await loadMusicData();
-  } catch (error) {
-    showError(ERROR.LOAD, error.message);
-  } finally {
-    showLoading(false);
+async function setupServiceWorker() {
+  if ('serviceWorker' in navigator) {
+    try {
+      const registration = await navigator.serviceWorker.register('sw.js', {
+        scope: '/musicas/'
+      });
+      
+      console.log('Service Worker registrado:', registration);
+      
+      // Atualização periódica a cada 1 hora
+      setInterval(() => registration.update(), 3600000);
+      
+    } catch (error) {
+      console.error('Falha no registro do Service Worker:', error);
+      showError('Erro de conexão', 'Não foi possível configurar o modo offline');
+    }
   }
-});
+}
 
 /**
  * FUNÇÕES PRINCIPAIS
  * ----------------------------------------------------
  */
-
-// Carrega dados do JSON
 async function loadMusicData() {
   try {
     const response = await fetch('musicas.json');
@@ -74,7 +72,6 @@ async function loadMusicData() {
   }
 }
 
-// Renderiza a lista de músicas
 function renderMusicList(musicas) {
   UI.destaques.innerHTML = musicas
     .filter(m => m.destaque)
@@ -86,7 +83,6 @@ function renderMusicList(musicas) {
     .join('');
 }
 
-// Controles do player
 async function playTrack(trackData) {
   try {
     showLoading(true, 'Preparando música...');
@@ -115,17 +111,16 @@ async function playTrack(trackData) {
  * FUNÇÕES AUXILIARES
  * ----------------------------------------------------
  */
+function initUIElements() {
+  UI.loading.overlay = document.getElementById('loading-overlay');
+  UI.loading.text = document.querySelector('.loading-text');
+  UI.errorContainer = document.querySelector('.error-container');
+}
 
-// Cria card de destaque
 function createFeaturedCard(musica) {
   return `
-    <div class="featured-item" 
-         data-id="${musica.id}" 
-         onclick="playTrack(${JSON.stringify(musica)})">
-      <img src="${PATH.capa}${musica.capa}" 
-           alt="${musica.titulo}"
-           loading="lazy"
-           onerror="this.src='fallback-capa.jpg'">
+    <div class="featured-item" data-id="${musica.id}" onclick="playTrack(${JSON.stringify(musica)})">
+      <img src="${PATH.capa}${musica.capa}" alt="${musica.titulo}" loading="lazy" onerror="this.src='fallback-capa.jpg'">
       <div class="overlay">
         <i class="fas fa-play"></i>
         <span class="genre-tag">${musica.genero}</span>
@@ -135,25 +130,16 @@ function createFeaturedCard(musica) {
   `;
 }
 
-// Cria card padrão
 function createMusicCard(musica) {
   return `
-    <div class="music-item" 
-         data-id="${musica.id}" 
-         onclick="playTrack(${JSON.stringify(musica)})">
-      <img src="${PATH.thumb}${musica.thumbnail}" 
-           class="thumbnail" 
-           alt="${musica.titulo}"
-           loading="lazy"
-           onerror="this.src='fallback-thumb.jpg'">
+    <div class="music-item" data-id="${musica.id}" onclick="playTrack(${JSON.stringify(musica)})">
+      <img src="${PATH.thumb}${musica.thumbnail}" class="thumbnail" alt="${musica.titulo}" loading="lazy" onerror="this.src='fallback-thumb.jpg'">
       <div class="info">
         <span class="title">${musica.titulo}</span>
         <span class="genre">${musica.genero}</span>
       </div>
       <div class="actions">
-        <button class="download-btn" 
-                onclick="downloadTrack('${musica.arquivo}')"
-                aria-label="Baixar ${musica.titulo}">
+        <button class="download-btn" onclick="downloadTrack('${musica.arquivo}')" aria-label="Baixar ${musica.titulo}">
           <i class="fas fa-download"></i>
         </button>
       </div>
@@ -161,7 +147,6 @@ function createMusicCard(musica) {
   `;
 }
 
-// Atualiza a UI do player
 function updatePlayerUI() {
   UI.playPause.innerHTML = isPlaying 
     ? '<i class="fas fa-pause"></i>' 
@@ -169,20 +154,12 @@ function updatePlayerUI() {
 }
 
 /**
- * GERENCIAMENTO DE EVENTOS
+ * CONTROLES DO PLAYER
  * ----------------------------------------------------
  */
-
 function initPlayerControls() {
-  // Play/Pause
-  UI.playPause.addEventListener('click', () => {
-    isPlaying = !isPlaying;
-    if (isPlaying) audio.play();
-    else audio.pause();
-    updatePlayerUI();
-  });
-
-  // Barra de progresso
+  UI.playPause.addEventListener('click', togglePlayState);
+  
   audio.addEventListener('timeupdate', () => {
     UI.progress.value = (audio.currentTime / audio.duration) * 100 || 0;
   });
@@ -191,7 +168,6 @@ function initPlayerControls() {
     audio.currentTime = (e.target.value / 100) * audio.duration;
   });
 
-  // Compartilhamento
   document.getElementById('share').addEventListener('click', () => {
     if (navigator.share) {
       navigator.share({
@@ -205,20 +181,16 @@ function initPlayerControls() {
   });
 }
 
-/**
+function togglePlayState() {
+  isPlaying = !isPlaying;
+  isPlaying ? audio.play() : audio.pause();
+  updatePlayerUI();
+}
+
 /**
  * UTILITÁRIOS
  * ----------------------------------------------------
  */
-
-// Verificação de elementos na inicialização
-function initUIElements() {
-  UI.loading.overlay = document.getElementById('loading-overlay');
-  UI.loading.text = document.querySelector('.loading-text');
-  UI.errorContainer = document.querySelector('.error-container');
-}
-
-// Feedback visual
 function showLoading(show, text = 'Carregando...') {
   if (!UI.loading.overlay) {
     console.error('Elemento loading-overlay não encontrado');
@@ -226,9 +198,7 @@ function showLoading(show, text = 'Carregando...') {
   }
   
   UI.loading.overlay.style.display = show ? 'flex' : 'none';
-  if (UI.loading.text) {
-    UI.loading.text.textContent = text;
-  }
+  if (UI.loading.text) UI.loading.text.textContent = text;
 }
 
 function showError(title, message = '') {
@@ -251,11 +221,19 @@ function showError(title, message = '') {
   }
 }
 
-// Highlight da música atual
 function highlightCurrentTrack(trackId) {
   document.querySelectorAll('[data-id]').forEach(el => {
     el.classList.toggle('playing', el.dataset.id === trackId);
   });
+}
+
+function downloadTrack(filename) {
+  const link = document.createElement('a');
+  link.href = `${PATH.audio}${filename}`;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 }
 
 /**
@@ -263,7 +241,7 @@ function highlightCurrentTrack(trackId) {
  * ----------------------------------------------------
  */
 document.addEventListener('DOMContentLoaded', () => {
-  initUIElements(); // Primeiro inicializa os elementos
+  initUIElements();
   
   try {
     showLoading(true, 'Carregando catálogo...');
