@@ -2,47 +2,47 @@
   "musicas": [
     {
       "titulo": "A Prima",
-      "arquivo": "a-prima.mp3",
+      "arquivo": "audio/a-prima.mp3",
       "genero": "Sertanejo"
     },
     {
       "titulo": "Aprendi Com Você",
-      "arquivo": "aprendi-com-voce.mp3",
+      "arquivo": "audio/aprendi-com-voce.mp3",
       "genero": "Sertanejo"
     },
     {
       "titulo": "Mercadinho",
-      "arquivo": "mercadinho.mp3",
+      "arquivo": "audio/mercadinho.mp3",
       "genero": "Sertanejo"
     },
     {
       "titulo": "Namorando Três",
-      "arquivo": "namorando-tres.mp3",
+      "arquivo": "audio/namorando-tres.mp3",
       "genero": "Sertanejo"
     },
     {
       "titulo": "Não Compra Não",
-      "arquivo": "nao-compra-nao.mp3",
+      "arquivo": "audio/nao-compra-nao.mp3",
       "genero": "Sertanejo"
     },
     {
       "titulo": "O Morto Tá de Lancha",
-      "arquivo": "o-morto-ta-de-lancha.mp3",
+      "arquivo": "audio/o-morto-ta-de-lancha.mp3",
       "genero": "Sertanejo"
     },
     {
       "titulo": "Oh Azar",
-      "arquivo": "oh-azar.mp3",
+      "arquivo": "audio/oh-azar.mp3",
       "genero": "Sertanejo"
     },
     {
       "titulo": "Só Tô Aceitando Pix",
-      "arquivo": "so-to-aceitando-pix.mp3",
+      "arquivo": "audio/so-to-aceitando-pix.mp3",
       "genero": "Sertanejo"
     },
     {
       "titulo": "Te Faltou Mae",
-      "arquivo": "te-faltou-mae.mp3",
+      "arquivo": "audio/te-faltou-mae.mp3",
       "genero": "Sertanejo"
     }
   ]
