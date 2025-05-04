@@ -4,12 +4,12 @@ let currentTrack = null;
 // Dados das músicas
 const musicData = [
     { titulo: "A Prima", arquivo: "a-prima.mp3", genero: "Sertanejo" },
-    { titulo: "Aprendi Com Você", arquivo: "aprendi-com-voce.mp3", genero: "Sertanejo" },
+    { titulo: "Aprendi Com Você", arquivo: "aprendi-com-voce.mp3", genero: "Forró, Piseiro" },
     { titulo: "Mercadinho", arquivo: "mercadinho.mp3", genero: "Sertanejo" },
-    { titulo: "Namorando Três", arquivo: "namorando-tres.mp3", genero: "Sertanejo" },
+    { titulo: "Namorando Três", arquivo: "namorando-tres.mp3", genero: "Pagode" },
     { titulo: "Não Compra Não", arquivo: "nao-compra-nao.mp3", genero: "Sertanejo" },
     { titulo: "O Morto Tá de Lancha", arquivo: "o-morto-ta-de-lancha.mp3", genero: "Sertanejo" },
-    { titulo: "Oh Azar", arquivo: "oh-azar.mp3", genero: "Sertanejo" },
+    { titulo: "Ô, Azar!", arquivo: "oh-azar.mp3", genero: "Forró/Sert." },
     { titulo: "Só Tô Aceitando Pix", arquivo: "so-to-aceitando-pix.mp3", genero: "Sertanejo" },
     { titulo: "Te Faltou Mae", arquivo: "te-faltou-mae.mp3", genero: "Sertanejo" }
 ];
