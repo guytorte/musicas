@@ -1,13 +1,48 @@
 {
   "musicas": [
     {
-      "titulo": "Pro tigrinho o pai tem dinheiro",
-      "arquivo": "pro-tigrinho.mp3",
+      "titulo": "A Prima",
+      "arquivo": "a-prima.mp3",
       "genero": "Sertanejo"
     },
     {
-      "titulo": "Vai chorar",
-      "arquivo": "vai-chorar.mp3",
+      "titulo": "Aprendi Com Você",
+      "arquivo": "aprendi-com-voce.mp3",
+      "genero": "Sertanejo"
+    },
+    {
+      "titulo": "Mercadinho",
+      "arquivo": "mercadinho.mp3",
+      "genero": "Sertanejo"
+    },
+    {
+      "titulo": "Namorando Três",
+      "arquivo": "namorando-tres.mp3",
+      "genero": "Sertanejo"
+    },
+    {
+      "titulo": "Não Compra Não",
+      "arquivo": "nao-compra-nao.mp3",
+      "genero": "Sertanejo"
+    },
+    {
+      "titulo": "O Morto Tá de Lancha",
+      "arquivo": "o-morto-ta-de-lancha.mp3",
+      "genero": "Sertanejo"
+    },
+    {
+      "titulo": "Oh Azar",
+      "arquivo": "oh-azar.mp3",
+      "genero": "Sertanejo"
+    },
+    {
+      "titulo": "Só Tô Aceitando Pix",
+      "arquivo": "so-to-aceitando-pix.mp3",
+      "genero": "Sertanejo"
+    },
+    {
+      "titulo": "Te Faltou Mae",
+      "arquivo": "te-faltou-mae.mp3",
       "genero": "Sertanejo"
     }
   ]
