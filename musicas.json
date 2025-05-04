@@ -1,140 +1,14 @@
 {
-  "destaques": [
+  "musicas": [
     {
-      "id": "pt001",
       "titulo": "Pro tigrinho o pai tem dinheiro",
-      "arquivo": "pro-tigrinho-o-pai-tem-dinheiro.mp3",
-      "capa": "capa-pro-tigrinho.jpg",
-      "thumbnail": "pro-tigrinho.jpg",
-      "genero": "Sertanejo",
-      "duracao": "2:45",
-      "lancamento": "2023-07-15",
-      "bpm": 125,
-      "letra": false,
-      "destaque": true,
-      "creditos": {
-        "compositor": "Seu Nome",
-        "produtor": "Produtor X"
-      }
+      "arquivo": "pro-tigrinho.mp3",
+      "genero": "Sertanejo"
     },
     {
-      "id": "vc002",
       "titulo": "Vai chorar",
       "arquivo": "vai-chorar.mp3",
-      "capa": "capa-vai-chorar.jpg",
-      "thumbnail": "vai-chorar.jpg",
-      "genero": "Sertanejo",
-      "duracao": "3:12",
-      "destaque": true
+      "genero": "Sertanejo"
     }
-  ],
-  "todas": [
-    {
-      "id": "esi003",
-      "titulo": "Eu sou incêndio",
-      "arquivo": "eu-sou-incendio.mp3",
-      "thumbnail": "incendio.jpg",
-      "genero": "Sertanejo",
-      "duracao": "2:58",
-      "plays": 1250
-    },
-    {
-      "id": "nt004",
-      "titulo": "Namorando três",
-      "arquivo": "namorando-tres.mp3",
-      "thumbnail": "namorando.jpg",
-      "genero": "Sertanejo",
-      "duracao": "3:30"
-    },
-    {
-      "id": "fc005",
-      "titulo": "Flagrante covarde",
-      "arquivo": "flagrante-covarde.mp3",
-      "thumbnail": "flagrante.jpg",
-      "genero": "Sertanejo",
-      "duracao": "2:40"
-    },
-    {
-      "id": "bdq006",
-      "titulo": "Bar de quarta",
-      "arquivo": "bar-de-quarta.mp3",
-      "thumbnail": "bar-quarta.jpg",
-      "genero": "Sertanejo",
-      "duracao": "3:15"
-    },
-    {
-      "id": "mnq007",
-      "titulo": "Manequim",
-      "arquivo": "manequim.mp3",
-      "thumbnail": "manequim.jpg",
-      "genero": "Sertanejo",
-      "duracao": "2:50"
-    },
-    {
-      "id": "eda008",
-      "titulo": "Eu disse agora!",
-      "arquivo": "eu-disse-agora.mp3",
-      "thumbnail": "agora.jpg",
-      "genero": "Sertanejo",
-      "duracao": "3:05"
-    },
-    {
-      "id": "stap009",
-      "titulo": "Só tô aceitando pix",
-      "arquivo": "so-to-aceitando-pix.mp3",
-      "thumbnail": "pix.jpg",
-      "genero": "Sertanejo",
-      "duracao": "2:55"
-    },
-    {
-      "id": "omtdl010",
-      "titulo": "O morto tá de lancha",
-      "arquivo": "o-morto-ta-de-lancha.mp3",
-      "thumbnail": "lancha.jpg",
-      "genero": "Sertanejo",
-      "duracao": "3:20"
-    },
-    {
-      "id": "ncn011",
-      "titulo": "Não compra não",
-      "arquivo": "nao-compra-nao.mp3",
-      "thumbnail": "nao-compra.jpg",
-      "genero": "Sertanejo",
-      "duracao": "2:45"
-    },
-    {
-      "id": "as012",
-      "titulo": "A sogra",
-      "arquivo": "a-sogra.mp3",
-      "thumbnail": "sogra.jpg",
-      "genero": "Sertanejo",
-      "duracao": "3:10"
-    },
-    {
-      "id": "de013",
-      "titulo": "Deixa ela",
-      "arquivo": "deixa-ela.mp3",
-      "thumbnail": "deixa-ela.jpg",
-      "genero": "Sertanejo",
-      "duracao": "2:50"
-    },
-    {
-      "id": "rdc014",
-      "titulo": "Rap dos Carlos",
-      "arquivo": "rap-dos-carlos.mp3",
-      "thumbnail": "rap-carlos.jpg",
-      "genero": "Rap",
-      "duracao": "2:30",
-      "destaque": false
-    }
-  ],
-  "metadata": {
-    "ultima_atualizacao": "2023-11-20",
-    "total_musicas": 13,
-    "versao": "2.1",
-    "estrutura": {
-      "destaques": "Músicas em destaque na homepage",
-      "todas": "Todas as músicas disponíveis"
-    }
-  }
+  ]
 }
