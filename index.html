@@ -3,22 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Músicas - Guilherme</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Guilherme - Sertanejo Raiz</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-    <section class="music-list">
-        <h2>Todas as Músicas</h2>
-        <div id="todas-musicas"></div>
-    </section>
+    <header class="header">
+        <!-- SEU ESPAÇO PARA FOTO E TEXTO -->
+        <div class="artist-profile">
+            <img src="foto-perfil.jpg" alt="Guilherme" class="artist-photo">
+            <div class="artist-info">
+                <h1>Guilherme</h1>
+                <p class="artist-bio">Cantando as histórias do coração do Brasil com autenticidade e paixão pelo sertanejo de raiz.</p>
+            </div>
+        </div>
+    </header>
 
-    <div class="player">
-        <audio id="audioPlayer"></audio>
-        <div class="controls">
-            <button id="playPause"><i class="fas fa-play"></i></button>
-            <input type="range" id="progress" value="0">
-            <button id="share"><i class="fas fa-share"></i></button>
+    <main class="container">
+        <section class="music-library">
+            <h2 class="section-title"><i class="fas fa-music"></i> Minhas Músicas</h2>
+            <div id="todas-musicas" class="music-grid"></div>
+        </section>
+    </main>
+
+    <div class="music-player">
+        <div class="player-controls">
+            <button id="playPause" class="control-btn play-btn">
+                <i class="fas fa-play"></i>
+            </button>
+            
+            <div class="progress-container">
+                <div class="song-info">
+                    <span id="currentSong">Nenhuma música selecionada</span>
+                    <span id="currentArtist">Guilherme</span>
+                </div>
+                <input type="range" id="progress" value="0" class="progress-bar">
+            </div>
+            
+            <button id="share" class="control-btn share-btn">
+                <i class="fas fa-share-alt"></i>
+            </button>
         </div>
     </div>
 
