@@ -4,7 +4,7 @@
       "titulo": "Flagrante covarde",
       "arquivo": "audio/flagrante-covarde.mp3",
       "genero": "Sertanejo",
-      "thumbnail": "thumbnails/default.jpg" (replace default.jpg with actual thumbnail path)
+      "thumbnail": "thumbnails/default.jpg"
     },
 	{
       "titulo": "Manequim",
