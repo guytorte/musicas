@@ -1,4 +1,3 @@
---- START OF FILE script.js ---
 const audio = new Audio();
 let currentTrackIndex = -1; // Índice da música atual no array musicData
 let musicData = []; // Array para armazenar os dados das músicas carregados do JSON
