@@ -55,7 +55,11 @@
       "arquivo": "audio/o-doutor.mp3",
       "genero": "Brega"
     },
-	
+	{
+      "titulo": "Saudades",
+      "arquivo": "audio/saudades.mp3",
+      "genero": "Pop"
+    },	
     {
       "titulo": "Aprendi com você",
       "arquivo": "audio/aprendi-com-voce.mp3",
