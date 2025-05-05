@@ -1,7 +1,7 @@
 {
   "musicas": [
   {
-      "titulo": "Flagrante Covarde",
+      "titulo": "Flagrante covarde",
       "arquivo": "audio/flagrante-covarde.mp3",
       "genero": "Sertanejo"
     },
@@ -16,17 +16,22 @@
       "genero": "Sertanejo"
     },
 	{
-      "titulo": "Saí de Fininho",
-      "arquivo": "audio/sai-de-fininho.mp3",
+      "titulo": "Sumi de fininho",
+      "arquivo": "audio/sumi-de-fininho.mp3",
       "genero": "Sertanejo"
     },
 	{
-      "titulo": "Eu sou incêncio",
+      "titulo": "Pro tigrinho, o pai tem dinheiro",
+      "arquivo": "audio/pro-tigrinho-o-pai-tem-dinheiro.mp3",
+      "genero": "Rap/trap/funk"
+    },
+	{
+      "titulo": "Eu sou incêndio",
       "arquivo": "audio/eu-sou-incendio.mp3",
       "genero": "Sertanejo"
     },
     {
-      "titulo": "A Prima",
+      "titulo": "A prima",
       "arquivo": "audio/a-prima.mp3",
       "genero": "Sertanejo"
     },
@@ -35,43 +40,48 @@
       "arquivo": "audio/eu-esperei.mp3",
       "genero": "Indie/Alternativo"
     },
+	  {
+      "titulo": "Tilanga",
+      "arquivo": "audio/tilanga.mp3",
+      "genero": "Sertanejo"
+    },
 	{
       "titulo": "Azul",
       "arquivo": "audio/azul.mp3",
       "genero": "Milonga/MPB"
     },
     {
-      "titulo": "Aprendi Com Você",
+      "titulo": "Aprendi com você",
       "arquivo": "audio/aprendi-com-voce.mp3",
       "genero": "Forró/Sertanejo"
     },
     {
-      "titulo": "Namorando Três",
+      "titulo": "Namorando três",
       "arquivo": "audio/namorando-tres.mp3",
       "genero": "Pagode"
     },
     {
-      "titulo": "Não Compra Não",
+      "titulo": "Não compra não",
       "arquivo": "audio/nao-compra-nao.mp3",
       "genero": "Sertanejo romântico"
     },
     {
-      "titulo": "O Morto Tá de Lancha",
+      "titulo": "O morto tá de lancha",
       "arquivo": "audio/o-morto-ta-de-lancha.mp3",
       "genero": "Pop"
     },
     {
-      "titulo": "Ô, Azar!",
+      "titulo": "Ô, azar!",
       "arquivo": "audio/oh-azar.mp3",
       "genero": "Forró/Sertanejo"
     },
     {
-      "titulo": "Só Tô Aceitando Pix",
+      "titulo": "Só tô aceitando pix",
       "arquivo": "audio/so-to-aceitando-pix.mp3",
       "genero": "Sertanejo"
     },
     {
-      "titulo": "Te Faltou Mae",
+      "titulo": "Te faltou mãe",
       "arquivo": "audio/te-faltou-mae.mp3",
       "genero": "Sertanejo"
     }
