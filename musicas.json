@@ -6,10 +6,10 @@
       "genero": "Sertanejo",
       "thumbnail": "thumbnails/default.jpg"
     },
-	{
-      "titulo": "Manequim",
-      "arquivo": "audio/manequim.mp3",
-      "genero": "Pop",
+	 {
+      "titulo": "Não compra não",
+      "arquivo": "audio/nao-compra-nao.mp3",
+      "genero": "Sertanejo romântico",
       "thumbnail": "thumbnails/default.jpg"
     },
 	{
@@ -25,12 +25,6 @@
       "thumbnail": "thumbnails/default.jpg"
     },
 	{
-      "titulo": "Pro tigrinho, o pai tem dinheiro",
-      "arquivo": "audio/pro-tigrinho-o-pai-tem-dinheiro.mp3",
-      "genero": "Rap/trap/funk",
-      "thumbnail": "thumbnails/default.jpg"
-    },
-	{
       "titulo": "Eu sou incêndio",
       "arquivo": "audio/eu-sou-incendio.mp3",
       "genero": "Sertanejo",
@@ -42,12 +36,7 @@
       "genero": "Sertanejo",
       "thumbnail": "thumbnails/default.jpg"
     },
-	{
-      "titulo": "Eu esperei",
-      "arquivo": "audio/eu-esperei.mp3",
-      "genero": "Indie/Alternativo",
-      "thumbnail": "thumbnails/default.jpg"
-    },
+	
 	  {
       "titulo": "Tilanga",
       "arquivo": "audio/tilanga.mp3",
@@ -55,54 +44,6 @@
       "thumbnail": "thumbnails/default.jpg"
     },
 	{
-      "titulo": "Azul",
-      "arquivo": "audio/azul.mp3",
-      "genero": "Milonga/MPB",
-      "thumbnail": "thumbnails/default.jpg"
-    },
-	{
-      "titulo": "O doutor",
-      "arquivo": "audio/o-doutor.mp3",
-      "genero": "Brega",
-      "thumbnail": "thumbnails/default.jpg"
-    },
-	{
-      "titulo": "Saudades",
-      "arquivo": "audio/saudades.mp3",
-      "genero": "Pop",
-      "thumbnail": "thumbnails/default.jpg"
-    },
-    {
-      "titulo": "Aprendi com você",
-      "arquivo": "audio/aprendi-com-voce.mp3",
-      "genero": "Forró/Sertanejo",
-      "thumbnail": "thumbnails/default.jpg"
-    },
-    {
-      "titulo": "Namorando três",
-      "arquivo": "audio/namorando-tres.mp3",
-      "genero": "Pagode",
-      "thumbnail": "thumbnails/default.jpg"
-    },
-    {
-      "titulo": "Não compra não",
-      "arquivo": "audio/nao-compra-nao.mp3",
-      "genero": "Sertanejo romântico",
-      "thumbnail": "thumbnails/default.jpg"
-    },
-    {
-      "titulo": "O morto tá de lancha",
-      "arquivo": "audio/o-morto-ta-de-lancha.mp3",
-      "genero": "Pop",
-      "thumbnail": "thumbnails/default.jpg"
-    },
-    {
-      "titulo": "Ô, azar!",
-      "arquivo": "audio/oh-azar.mp3",
-      "genero": "Forró/Sertanejo",
-      "thumbnail": "thumbnails/default.jpg"
-    },
-    {
       "titulo": "Só tô aceitando pix",
       "arquivo": "audio/so-to-aceitando-pix.mp3",
       "genero": "Sertanejo",
@@ -113,6 +54,66 @@
       "arquivo": "audio/te-faltou-mae.mp3",
       "genero": "Sertanejo",
       "thumbnail": "thumbnails/default.jpg"
-    }
+    },
+	{
+      "titulo": "Aprendi com você",
+      "arquivo": "audio/aprendi-com-voce.mp3",
+      "genero": "Forró/Sertanejo",
+      "thumbnail": "thumbnails/default.jpg"
+    },
+	{
+      "titulo": "Ô, azar!",
+      "arquivo": "audio/oh-azar.mp3",
+      "genero": "Forró/Sertanejo",
+      "thumbnail": "thumbnails/default.jpg"
+    },
+	{
+      "titulo": "O doutor",
+      "arquivo": "audio/o-doutor.mp3",
+      "genero": "Brega",
+      "thumbnail": "thumbnails/default.jpg"
+    },
+	{
+      "titulo": "Pro tigrinho, o pai tem dinheiro",
+      "arquivo": "audio/pro-tigrinho-o-pai-tem-dinheiro.mp3",
+      "genero": "Rap/trap/funk",
+      "thumbnail": "thumbnails/default.jpg"
+    },
+	{
+      "titulo": "Azul",
+      "arquivo": "audio/azul.mp3",
+      "genero": "Milonga/MPB",
+      "thumbnail": "thumbnails/default.jpg"
+    },
+	{
+      "titulo": "Manequim",
+      "arquivo": "audio/manequim.mp3",
+      "genero": "Pop",
+      "thumbnail": "thumbnails/default.jpg"
+    },
+	{
+      "titulo": "Eu esperei",
+      "arquivo": "audio/eu-esperei.mp3",
+      "genero": "Indie/Alternativo",
+      "thumbnail": "thumbnails/default.jpg"
+    },
+	{
+      "titulo": "Saudades",
+      "arquivo": "audio/saudades.mp3",
+      "genero": "Pop",
+      "thumbnail": "thumbnails/default.jpg"
+    },
+    {
+      "titulo": "Namorando três",
+      "arquivo": "audio/namorando-tres.mp3",
+      "genero": "Pagode",
+      "thumbnail": "thumbnails/default.jpg"
+    },
+    {
+      "titulo": "O morto tá de lancha",
+      "arquivo": "audio/o-morto-ta-de-lancha.mp3",
+      "genero": "Pop",
+      "thumbnail": "thumbnails/default.jpg"
+    }   
   ]
 }
