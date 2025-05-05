@@ -1,39 +1,69 @@
 {
   "musicas": [
+  {
+      "titulo": "Flagrante Covarde",
+      "arquivo": "audio/flagrante-covarde.mp3",
+      "genero": "Sertanejo"
+    },
+	{
+      "titulo": "Manequim",
+      "arquivo": "audio/manequim.mp3",
+      "genero": "Pop"
+    },
+	{
+      "titulo": "Mercadinho",
+      "arquivo": "audio/mercadinho.mp3",
+      "genero": "Sertanejo"
+    },
+	{
+      "titulo": "Saí de Fininho",
+      "arquivo": "audio/sai-de-fininho.mp3",
+      "genero": "Sertanejo"
+    },
+	{
+      "titulo": "Eu sou incêncio",
+      "arquivo": "audio/eu-sou-incendio.mp3",
+      "genero": "Sertanejo"
+    },
     {
       "titulo": "A Prima",
       "arquivo": "audio/a-prima.mp3",
       "genero": "Sertanejo"
     },
+	{
+      "titulo": "Eu esperei",
+      "arquivo": "audio/eu-esperei.mp3",
+      "genero": "Indie/Alternativo"
+    },
+	{
+      "titulo": "Azul",
+      "arquivo": "audio/azul.mp3",
+      "genero": "Milonga/MPB"
+    },
     {
       "titulo": "Aprendi Com Você",
       "arquivo": "audio/aprendi-com-voce.mp3",
-      "genero": "Sertanejo"
-    },
-    {
-      "titulo": "Mercadinho",
-      "arquivo": "audio/mercadinho.mp3",
-      "genero": "Sertanejo"
+      "genero": "Forró/Sertanejo"
     },
     {
       "titulo": "Namorando Três",
       "arquivo": "audio/namorando-tres.mp3",
-      "genero": "Sertanejo"
+      "genero": "Pagode"
     },
     {
       "titulo": "Não Compra Não",
       "arquivo": "audio/nao-compra-nao.mp3",
-      "genero": "Sertanejo"
+      "genero": "Sertanejo romântico"
     },
     {
       "titulo": "O Morto Tá de Lancha",
       "arquivo": "audio/o-morto-ta-de-lancha.mp3",
-      "genero": "Sertanejo"
+      "genero": "Pop"
     },
     {
-      "titulo": "Oh Azar",
+      "titulo": "Ô, Azar!",
       "arquivo": "audio/oh-azar.mp3",
-      "genero": "Sertanejo"
+      "genero": "Forró/Sertanejo"
     },
     {
       "titulo": "Só Tô Aceitando Pix",
