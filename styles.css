@@ -1,235 +1,354 @@
+--- START OF FILE styles.css ---
+/* Variáveis CSS para cores do manifest */
 :root {
-    --primary: #FF6B6B;
-    --primary-dark: #EE5A5A;
-    --secondary: #4ECDC4;
-    --dark: #292F36;
-    --light: #F7FFF7;
-    --gray: #6C757D;
-    --player-bg: rgba(41, 47, 54, 0.95);
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+    --primary-color: #6C5CE7;
+    --background-color: #1A1A1A;
+    --text-color: #E0E0E0;
+    --secondary-text-color: #A0A0A0;
+    --card-background: #2A2A2A;
+    --card-hover: #3A3A3A;
+    --active-item: #4A3B7D; /* Cor relacionada ao primary-color */
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-    color: var(--light);
-    min-height: 100vh;
-    padding-bottom: 100px;
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    margin: 0;
+    padding-bottom: 100px; /* Espaço para o player fixo */
+    line-height: 1.6;
 }
 
 .header {
-    background: rgba(0, 0, 0, 0.7);
-    padding: 2rem;
+    background: linear-gradient(to bottom, var(--card-background), var(--background-color));
+    padding: 20px;
     text-align: center;
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid var(--card-hover);
 }
 
 .artist-profile {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 1.5rem;
-    max-width: 800px;
-    margin: 0 auto;
+    gap: 15px;
 }
 
 .artist-photo {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid var(--primary);
-    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+    border: 3px solid var(--primary-color);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .artist-info h1 {
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
-    color: var(--primary);
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    color: #FFFFFF;
 }
 
 .artist-bio {
-    font-family: 'Roboto', sans-serif;
-    color: rgba(255, 255, 255, 0.8);
-    max-width: 500px;
+    margin-top: 5px;
+    font-size: 0.9em;
+    color: var(--secondary-text-color);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .container {
-    padding: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 0 20px;
 }
 
 .section-title {
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: var(--secondary);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    text-align: center;
 }
 
 .music-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1rem;
+    gap: 15px;
+    /* Ajustar colunas para ser responsivo */
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
 }
 
 .music-item {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 12px;
-    padding: 1.2rem;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: var(--card-background);
+    border-radius: 8px;
+    padding: 15px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
 .music-item:hover {
-    transform: translateY(-5px);
-    background: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    background-color: var(--card-hover);
+}
+
+.music-item.active {
+    background-color: var(--active-item);
+    border: 1px solid var(--primary-color);
+    box-shadow: 0 0 8px rgba(108, 92, 231, 0.5);
 }
 
 .music-info {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+    width: 100%;
 }
 
 .music-info h3 {
-    font-size: 1.1rem;
-    margin-bottom: 0.3rem;
+    margin: 0 0 5px 0;
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #FFFFFF;
 }
 
 .music-info .genre {
-    font-size: 0.9rem;
-    color: var(--secondary);
-    font-weight: 500;
+    font-size: 0.8em;
+    color: var(--secondary-text-color);
 }
 
 .download-btn {
     background: none;
     border: none;
-    color: var(--primary);
-    font-size: 1.2rem;
+    color: var(--primary-color);
     cursor: pointer;
-    transition: transform 0.2s;
+    font-size: 1.2em;
+    padding: 5px;
+    transition: color 0.2s ease;
 }
 
 .download-btn:hover {
-    transform: scale(1.1);
+    color: #FFFFFF;
 }
 
+/* --- Music Player Fixed Footer --- */
 .music-player {
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
-    background: var(--player-bg);
-    padding: 1rem 2rem;
-    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.3);
+    background-color: var(--card-background);
+    border-top: 1px solid var(--card-hover);
+    padding: 10px 20px;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
     z-index: 1000;
 }
 
 .player-controls {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
-    max-width: 1200px;
+    gap: 15px;
+    max-width: 900px;
     margin: 0 auto;
 }
 
 .control-btn {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.2s;
-    border: none;
-}
-
-.play-btn {
-    background: var(--primary);
-    color: white;
-    font-size: 1.2rem;
-}
-
-.play-btn:hover {
-    background: var(--primary-dark);
-    transform: scale(1.05);
-}
-
-.share-btn {
     background: none;
-    color: var(--light);
-    border: 2px solid var(--light);
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    font-size: 1.5em;
+    padding: 5px;
+    transition: color 0.2s ease, transform 0.1s ease;
 }
 
-.share-btn:hover {
-    background: var(--light);
-    color: var(--dark);
+.control-btn:hover {
+    color: var(--primary-color);
+}
+
+.control-btn:active {
+    transform: scale(0.95);
+}
+
+.play-btn i {
+     font-size: 1.8em; /* Destaca o botão play/pause */
 }
 
 .progress-container {
-    flex: 1;
+    flex-grow: 1; /* Ocupa o máximo de espaço possível */
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
 .song-info {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 0.5rem;
+    font-size: 0.9em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-#currentSong {
+.song-info #currentSong {
     font-weight: 600;
-    font-size: 1rem;
+    color: #FFFFFF;
 }
 
-#currentArtist {
-    font-size: 0.8rem;
-    color: var(--gray);
+.song-info #currentArtist {
+    color: var(--secondary-text-color);
+    margin-left: 5px;
 }
 
 .progress-bar {
     width: 100%;
-    height: 6px;
-    border-radius: 3px;
-    background: rgba(255, 255, 255, 0.2);
+    height: 5px;
+    -webkit-appearance: none;
     appearance: none;
+    background: var(--card-hover);
+    border-radius: 5px;
+    outline: none;
     cursor: pointer;
 }
 
-.progress-bar::-webkit-slider-thumb {
-    appearance: none;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background: var(--primary);
-    border: 2px solid white;
+/* Estilo para a barra de progresso (track) */
+.progress-bar::-webkit-slider-runnable-track {
+    height: 5px;
+    background: var(--card-hover);
+    border-radius: 5px;
 }
 
-/* Responsividade */
-@media (max-width: 768px) {
-    .artist-profile {
-        flex-direction: column;
+.progress-bar::-moz-range-track {
+    height: 5px;
+    background: var(--card-hover);
+    border-radius: 5px;
+}
+
+/* Estilo para o "preenchimento" da barra de progresso (progress) */
+.progress-bar::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    cursor: pointer;
+    margin-top: -5px; /* Centraliza o thumb na track */
+    box-shadow: 0 0 5px rgba(108, 92, 231, 0.5);
+}
+
+.progress-bar::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(108, 92, 231, 0.5);
+}
+
+.time-info {
+    font-size: 0.8em;
+    color: var(--secondary-text-color);
+    text-align: right;
+}
+
+.volume-control {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.volume-slider {
+    width: 80px; /* Ajuste conforme necessário */
+    height: 5px;
+     -webkit-appearance: none;
+    appearance: none;
+    background: var(--card-hover);
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+}
+
+.volume-slider::-webkit-slider-runnable-track {
+    height: 5px;
+    background: var(--card-hover);
+    border-radius: 5px;
+}
+
+.volume-slider::-moz-range-track {
+    height: 5px;
+    background: var(--card-hover);
+    border-radius: 5px;
+}
+
+.volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    cursor: pointer;
+    margin-top: -3.5px; /* Centraliza o thumb */
+}
+
+.volume-slider::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.share-btn {
+    /* Estilos definidos em .control-btn */
+}
+
+
+/* Responsividade básica para o player */
+@media (max-width: 600px) {
+    .player-controls {
+        flex-wrap: wrap; /* Permite que os itens quebrem linha */
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .progress-container {
+        order: -1; /* Move a barra de progresso para cima em telas pequenas */
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .song-info {
+        text-align: center;
+        margin-bottom: 5px;
+    }
+
+    .time-info {
         text-align: center;
     }
-    
-    .music-grid {
-        grid-template-columns: 1fr;
+
+    .volume-control {
+        /* Pode ajustar o layout ou esconder o slider em telas muito pequenas */
     }
-    
-    .player-controls {
-        gap: 1rem;
-    }
+     .volume-slider {
+         width: 50px; /* Slider menor em telas pequenas */
+     }
 }
+
+@media (max-width: 400px) {
+    .volume-control {
+         /* Opcional: esconder o slider e manter só o ícone mute/unmute */
+         /* .volume-slider { display: none; } */
+         gap: 0;
+     }
+     .control-btn {
+         font-size: 1.3em;
+     }
+     .play-btn i {
+         font-size: 1.6em;
+     }
+}
+
+--- END OF FILE styles.css ---
