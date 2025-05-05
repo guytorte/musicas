@@ -50,6 +50,12 @@
       "arquivo": "audio/azul.mp3",
       "genero": "Milonga/MPB"
     },
+	{
+      "titulo": "O doutor",
+      "arquivo": "audio/o-doutor.mp3",
+      "genero": "Brega"
+    },
+	
     {
       "titulo": "Aprendi com você",
       "arquivo": "audio/aprendi-com-voce.mp3",
