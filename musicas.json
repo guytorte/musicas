@@ -6,12 +6,6 @@
       "genero": "Sertanejo",
       "thumbnail": "thumbnails/default.jpg"
     },
-	 {
-      "titulo": "Não compra não",
-      "arquivo": "audio/nao-compra-nao.mp3",
-      "genero": "Sertanejo romântico",
-      "thumbnail": "thumbnails/default.jpg"
-    },
 	{
       "titulo": "O mercadinho",
       "arquivo": "audio/mercadinho.mp3",
@@ -41,6 +35,13 @@
       "titulo": "Tilanga",
       "arquivo": "audio/tilanga.mp3",
       "genero": "Sertanejo",
+      "thumbnail": "thumbnails/default.jpg"
+    },
+	  
+	 {
+      "titulo": "Não compra não",
+      "arquivo": "audio/nao-compra-nao.mp3",
+      "genero": "Sertanejo romântico",
       "thumbnail": "thumbnails/default.jpg"
     },
 	{
