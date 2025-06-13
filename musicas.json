@@ -120,6 +120,12 @@
       "genero": "pop punk",
       "thumbnail": "thumbnails/default.jpg"
     },
+       {
+      "titulo": "Vai chorar",
+      "arquivo": "audio/vai-chorar-pp.mp3",
+      "genero": "pop punk",
+      "thumbnail": "thumbnails/default.jpg"
+    },
     {
       "titulo": "O bar explodiu",
       "arquivo": "audio/o-bar-explodiu.mp3",
