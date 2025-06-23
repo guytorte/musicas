@@ -8,13 +8,19 @@
     },
     {
       "titulo": "Sumi de fininho",
-      "arquivo": "audio/sumi-de-fininho.mpraudio/sumi-de-fininho.mp3",
+      "arquivo": "audio/sumi-de-fininho.mp3",
       "genero": "sertanejo",
       "thumbnail": "thumbnails/default.jpg"
     },
     {
       "titulo": "Tilanga",
       "arquivo": "audio/tilanga.mp3",
+      "genero": "sertanejo",
+      "thumbnail": "thumbnails/default.jpg"
+    },
+     {
+      "titulo": "Só tô aceitando pix",
+      "arquivo": "audio/so-to-aceitando-pix.mp3",
       "genero": "sertanejo",
       "thumbnail": "thumbnails/default.jpg"
     },
@@ -33,12 +39,6 @@
     {
       "titulo": "Eu sou incêndio",
       "arquivo": "audio/eu-sou-incendio.mp3",
-      "genero": "sertanejo",
-      "thumbnail": "thumbnails/default.jpg"
-    },
-    {
-      "titulo": "Só tô aceitando pix",
-      "arquivo": "audio/so-to-aceitando-pix.mp3",
       "genero": "sertanejo",
       "thumbnail": "thumbnails/default.jpg"
     },
@@ -117,13 +117,13 @@
     {
       "titulo": "Eu quero de volta",
       "arquivo": "audio/eu-quero-de-volta.mp3",
-      "genero": "pop punk",
+      "genero": "emo/pop punk",
       "thumbnail": "thumbnails/default.jpg"
     },
        {
       "titulo": "Vai chorar",
       "arquivo": "audio/vai-chorar-pp.mp3",
-      "genero": "pop punk",
+      "genero": "emo/pop punk",
       "thumbnail": "thumbnails/default.jpg"
     },
     {
@@ -161,11 +161,17 @@
       "arquivo": "audio/azul.mp3",
       "genero": "mpb, milonga",
       "thumbnail": "thumbnails/default.jpg"
-    },
+    },    
     {
       "titulo": "Pro tigrinho, o pai tem dinheiro",
       "arquivo": "audio/pro-tigrinho-o-pai-tem-dinheiro.mp3",
       "genero": "rap, trap, funk",
+      "thumbnail": "thumbnails/default.jpg"
+    },
+        {
+      "titulo": "The Life Snake (A Vida Cobra)",
+      "arquivo": "audio/the-life-snake.mp3",
+      "genero": "rap, trap",
       "thumbnail": "thumbnails/default.jpg"
     },
     {
@@ -199,7 +205,7 @@
       "thumbnail": "thumbnails/default.jpg"
     },
     {
-      "titulo": "Esperei",
+      "titulo": "Eu esperei",
       "arquivo": "audio/esperei-v3.mp3",
       "genero": "post punk, dub",
       "thumbnail": "thumbnails/default.jpg"
@@ -214,12 +220,6 @@
       "titulo": "Tóx",
       "arquivo": "audio/tox.mp3",
       "genero": "rock, indie",
-      "thumbnail": "thumbnails/default.jpg"
-    },
-    {
-      "titulo": "Eu esperei",
-      "arquivo": "audio/eu-esperei.mp3",
-      "genero": "indie, trip hop",
       "thumbnail": "thumbnails/default.jpg"
     },
     {
