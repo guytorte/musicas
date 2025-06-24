@@ -119,6 +119,12 @@ body {
     color: var(--secondary-text-color);
 }
 
+/* New CSS for music actions */
+.music-actions {
+    display: flex;
+    gap: 8px;
+}
+
 .download-btn {
     background: none;
     border: none;
@@ -132,6 +138,26 @@ body {
 .download-btn:hover {
     color: #FFFFFF;
 }
+
+.share-music-btn {
+    background: none;
+    border: none;
+    color: var(--secondary-text-color); /* Cor mais sutil para o link */
+    cursor: pointer;
+    font-size: 1em; /* Tamanho ligeiramente menor que o download */
+    padding: 5px;
+    transition: color 0.2s ease;
+}
+
+.share-music-btn:hover {
+    color: var(--primary-color);
+}
+
+/* Estilo para o botão quando o link é copiado */
+.share-music-btn i.fa-check {
+    color: #4CAF50; /* Verde para sucesso */
+}
+
 
 /* --- Music Player Fixed Footer --- */
 .music-player {
