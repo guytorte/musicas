@@ -18,7 +18,7 @@
       "genero": "sertanejo",
       "thumbnail": "thumbnails/default.jpg"
     },
-     {
+    {
       "titulo": "Só tô aceitando pix",
       "arquivo": "audio/so-to-aceitando-pix.mp3",
       "genero": "sertanejo",
@@ -97,6 +97,12 @@
       "thumbnail": "thumbnails/default.jpg"
     },
     {
+      "titulo": "Última cerveja",
+      "arquivo": "audio/ultima-cerveja.mp3",
+      "genero": "sertanejo romântico",
+      "thumbnail": "thumbnails/default.jpg"
+    },
+    {
       "titulo": "Saudades",
       "arquivo": "audio/saudades.mp3",
       "genero": "sertanejo, reggaeton",
@@ -120,17 +126,17 @@
       "genero": "emo/pop punk",
       "thumbnail": "thumbnails/default.jpg"
     },
-       {
+    {
       "titulo": "Vai chorar",
       "arquivo": "audio/vai-chorar-pp.mp3",
       "genero": "emo/pop punk",
       "thumbnail": "thumbnails/default.jpg"
     },
     {
-    "titulo": "Cerveja e porrada",
-    "arquivo": "audio/cerveja-porradaria.mp3",
-    "genero": "rock/hard rock",
-    "thumbnail": "thumbnails/default.jpg"    
+      "titulo": "Cerveja e porrada",
+      "arquivo": "audio/cerveja-porradaria.mp3",
+      "genero": "rock/hard rock",
+      "thumbnail": "thumbnails/default.jpg"
     },
     {
       "titulo": "O bar explodiu",
@@ -167,14 +173,14 @@
       "arquivo": "audio/azul.mp3",
       "genero": "mpb, milonga",
       "thumbnail": "thumbnails/default.jpg"
-    },    
+    },
     {
       "titulo": "Pro tigrinho, o pai tem dinheiro",
       "arquivo": "audio/pro-tigrinho-o-pai-tem-dinheiro.mp3",
       "genero": "rap, trap, funk",
       "thumbnail": "thumbnails/default.jpg"
     },
-        {
+    {
       "titulo": "The Life Snake (A Vida Cobra)",
       "arquivo": "audio/the-life-snake.mp3",
       "genero": "rap, trap",
@@ -226,6 +232,30 @@
       "titulo": "Tóx",
       "arquivo": "audio/tox.mp3",
       "genero": "rock, indie",
+      "thumbnail": "thumbnails/default.jpg"
+    },
+    {
+      "titulo": "fucking Love drogas",
+      "arquivo": "audio/fucking-love-drogas.mp3",
+      "genero": "R&B/Alt R&B",
+      "thumbnail": "thumbnails/default.jpg"
+    },
+    {
+      "titulo": "Se der errado",
+      "arquivo": "audio/se-der-errado.mp3",
+      "genero": "R&B/pop",
+      "thumbnail": "thumbnails/default.jpg"
+    },
+    {
+      "titulo": "Era eu",
+      "arquivo": "audio/era-eu.mp3",
+      "genero": "R&B/pagode/pop",
+      "thumbnail": "thumbnails/default.jpg"
+    },
+    {
+      "titulo": "Putz",
+      "arquivo": "audio/putz.mp3",
+      "genero": "R&B romântico",
       "thumbnail": "thumbnails/default.jpg"
     },
     {
