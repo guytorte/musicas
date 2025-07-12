@@ -113,6 +113,18 @@
       "arquivo": "audio/o-doutor.mp3",
       "genero": "brega",
       "thumbnail": "thumbnails/default.jpg"
+    }, 
+    {
+      "titulo": "Negão organizado",
+      "arquivo": "audio/negao-organizado.mp3",
+      "genero": "pagode",
+      "thumbnail": "thumbnails/default.jpg"
+    },   
+    {
+      "titulo": "Vou te ignorar",
+      "arquivo": "audio/vou-te-ignorar-live.mp3",
+      "genero": "pagode",
+      "thumbnail": "thumbnails/default.jpg"
     },
     {
       "titulo": "Marcar de marcar",
