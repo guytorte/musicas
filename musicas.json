@@ -43,6 +43,30 @@
       "thumbnail": "thumbnails/default.jpg"
     },
     {
+      "titulo": "Cupido de Wall Street",
+      "arquivo": "audio/cupido-de-wall-street.mp3",
+      "genero": "forró vaquejada, pisadinha",
+      "thumbnail": "thumbnails/default.jpg"
+    },
+    {
+      "titulo": "Tô fumando crack",
+      "arquivo": "audio/to-fumando-crack.mp3",
+      "genero": "arrocha",
+      "thumbnail": "thumbnails/default.jpg"
+    },
+    {
+      "titulo": "Motoboy do iFood",
+      "arquivo": "audio/motoboy-do-ifood.mp3",
+      "genero": "pisadinha, forró eletrônico",
+      "thumbnail": "thumbnails/default.jpg"
+    },
+    {
+      "titulo": "Motoboy do iFood (70s)",
+      "arquivo": "audio/motoboy-70s.mp3",
+      "genero": "sophisti-pop, smooth soul",
+      "thumbnail": "thumbnails/default.jpg"
+    },
+    {
       "titulo": "Te faltou mãe",
       "arquivo": "audio/te-faltou-mae.mp3",
       "genero": "sertanejo",
