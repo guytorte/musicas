@@ -41,7 +41,13 @@
       "arquivo": "audio/eu-sou-incendio.mp3",
       "genero": "sertanejo",
       "thumbnail": "thumbnails/default.jpg"
-    },
+    },  
+    {
+      "titulo": "Não passou da mamada",
+      "arquivo": "audio/nao-passou-da-mamada-v5.mp3",
+      "genero": "funk",
+      "thumbnail": "thumbnails/default.jpg"
+    },    
     {
       "titulo": "Cupido de Wall Street",
       "arquivo": "audio/cupido-de-wall-street.mp3",
