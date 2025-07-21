@@ -1,9 +1,11 @@
+// --- Global Variables ---
 const audio = new Audio();
-let currentTrackIndex = -1; // Índice da música atual no array musicData
-let musicData = []; // Array para armazenar os dados das músicas carregados do JSON
-let filteredMusic = []; // Array para armazenar as músicas filtradas/pesquisadas
+let currentTrackIndex = -1; // Index in the original full musicData array
+let musicData = []; // Will hold all songs from the JSON
+let playlists = {}; // Will hold the predefined playlists from the JSON
+let currentlyDisplayedSongs = []; // Holds the subset of songs currently visible on the page
 
-// Elementos do player
+// --- DOM Element References ---
 const playPauseBtn = document.getElementById('playPause');
 const prevTrackBtn = document.getElementById('prevTrack');
 const nextTrackBtn = document.getElementById('nextTrack');
@@ -14,23 +16,28 @@ const totalTimeDisplay = document.getElementById('totalTime');
 const volumeSlider = document.getElementById('volume');
 const volumeIconBtn = document.getElementById('volumeIcon');
 const musicGrid = document.getElementById('todas-musicas');
+const mainShareBtn = document.getElementById('share');
 
-// Base URL para links únicos
-const appBaseUrl = window.location.origin + window.location.pathname;
+// --- Utility Functions ---
 
-// --- Funções de Utilitário ---
-
-// Formata o tempo em segundos para MM:SS
+/**
+ * Formats time in seconds to a "MM:SS" string.
+ * @param {number} seconds - The time in seconds.
+ * @returns {string} The formatted time string.
+ */
 function formatTime(seconds) {
+    if (isNaN(seconds) || seconds < 0) return "0:00";
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = Math.floor(seconds % 60);
     const formattedSeconds = remainingSeconds < 10 ? '0' + remainingSeconds : remainingSeconds;
     return `${minutes}:${formattedSeconds}`;
 }
 
-// --- Funções de Carregamento de Dados ---
+// --- Core Logic: Data Fetching and Filtering ---
 
-// Carrega os dados das músicas do arquivo JSON
+/**
+ * Fetches music data from the JSON file and initializes the application.
+ */
 async function fetchMusicData() {
     try {
         const response = await fetch('musicas.json');
@@ -38,10 +45,13 @@ async function fetchMusicData() {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        musicData = data.musicas; // Armazena os dados
-        filteredMusic = [...musicData]; // Inicializa filteredMusic com todos os dados
-        loadMusicListUI(); // Carrega a interface com os dados
-        initPlayerControls(); // Inicializa os controles após carregar a UI
+        musicData = data.musicas;
+        playlists = data.playlists || {};
+
+        applyFilterFromURL(); // This sets `currentlyDisplayedSongs` and renders the initial list
+        initPlayerControls(); // Setup event listeners for the player
+        playMusicFromUrl();   // Check if a specific song should be played from the URL
+
         console.log("Dados das músicas carregados com sucesso.");
     } catch (error) {
         console.error("Erro ao carregar dados das músicas:", error);
@@ -49,27 +59,52 @@ async function fetchMusicData() {
     }
 }
 
-// Carrega a lista de músicas na interface (agora usa filteredMusic)
-function loadMusicListUI() {
-    musicGrid.innerHTML = ''; // Limpa o conteúdo existente
+/**
+ * Reads URL parameters, filters the song list, and then renders it.
+ */
+function applyFilterFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    const genre = params.get('genre');
+    const tag = params.get('tag');
+    const playlist = params.get('playlist');
 
-    if (!filteredMusic || filteredMusic.length === 0) {
-         musicGrid.innerHTML = '<p>Nenhuma música disponível no momento.</p>';
-         return;
+    let filteredList = musicData; // Default to all songs
+
+    if (genre) {
+        filteredList = musicData.filter(song => (song.genero || "").toLowerCase().includes(genre.toLowerCase()));
+        console.log(`Filtrando por gênero: ${genre}`);
+    } else if (tag) {
+        filteredList = musicData.filter(song => song.tags && song.tags.some(t => t.toLowerCase() === tag.toLowerCase()));
+        console.log(`Filtrando por tag: ${tag}`);
+    } else if (playlist && playlists[playlist]) {
+        const playlistTitles = playlists[playlist];
+        filteredList = musicData.filter(song => playlistTitles.includes(song.titulo));
+        console.log(`Carregando playlist: ${playlist}`);
+    }
+    
+    // Store the filtered list globally for the player controls to use
+    currentlyDisplayedSongs = filteredList;
+    loadMusicListUI(currentlyDisplayedSongs);
+}
+
+/**
+ * Renders the provided list of songs into the HTML grid.
+ * @param {Array} songsToDisplay - The array of song objects to show.
+ */
+function loadMusicListUI(songsToDisplay) {
+    musicGrid.innerHTML = '';
+
+    if (!songsToDisplay || songsToDisplay.length === 0) {
+        musicGrid.innerHTML = '<p>Nenhuma música encontrada para esta seleção.</p>';
+        return;
     }
 
-    filteredMusic.forEach((musica) => { // Itera sobre filteredMusic
-        // Encontra o índice original da música no array musicData
-        // Isso é crucial porque filteredMusic pode ter uma ordem ou subconjunto diferente
-        const originalIndex = musicData.findIndex(m => m.arquivo === musica.arquivo);
-        if (originalIndex === -1) {
-            console.warn(`Música "${musica.titulo}" não encontrada no array original.`);
-            return; // Pula se a música não for encontrada no array original
-        }
+    songsToDisplay.forEach((musica) => {
+        const originalIndex = musicData.findIndex(item => item.arquivo === musica.arquivo);
+        if (originalIndex === -1) return;
 
         const musicItem = document.createElement('div');
         musicItem.className = 'music-item';
-        // Usa o índice original no array como identificador
         musicItem.setAttribute('data-index', originalIndex);
 
         musicItem.innerHTML = `
@@ -79,378 +114,198 @@ function loadMusicListUI() {
                     <span class="genre">${musica.genero}</span>
                 </div>
                 <div class="music-actions">
-                    <button class="share-music-btn" title="Copiar link" onclick="copyMusicLink(event, ${originalIndex})">
+                    <button class="share-music-btn" title="Copiar link da música" onclick="shareSingleTrackLink(event, '${musica.titulo}')">
                         <i class="fas fa-link"></i>
                     </button>
-                    <button class="download-btn" onclick="downloadTrack(event, '${musica.arquivo}')">
+                    <button class="download-btn" title="Baixar música" onclick="downloadTrack(event, '${musica.arquivo}')">
                         <i class="fas fa-download"></i>
                     </button>
                 </div>
-            </div>
-        `;
-
+            </div>`;
         musicGrid.appendChild(musicItem);
     });
-
-    // Certifica-se de que a música atualmente tocando (se houver) esteja destacada
-    updatePlayingIndicator(currentTrackIndex);
 }
 
-// --- Funções para gerenciar links individuais ---
-
-// Gera um link único para a música (usando hash)
-function getMusicShareLink(index) {
-    return `${appBaseUrl}#/musica/${index}`;
-}
-
-// Extrai o índice da música da URL (hash)
-function getMusicIndexFromUrl() {
-    const hash = window.location.hash;
-    if (hash.startsWith('#/musica/')) {
-        const index = parseInt(hash.split('/')[2]);
-        // Verifica se o índice é válido em relação ao musicData completo
-        if (!isNaN(index) && index >= 0 && index < musicData.length) {
-            return index;
-        }
-    }
-    return null;
-}
-
-// Atualiza a URL quando uma música é selecionada
-function updateUrlForMusic(index) {
-    const newUrl = getMusicShareLink(index);
-    // Evita adicionar estados idênticos ao histórico do navegador
-    if (window.location.hash !== newUrl.split('#')[1]) {
-        window.history.pushState({}, '', newUrl);
-    }
-}
-
-// Toca a música baseada na URL ao carregar a página
+/**
+ * Checks URL for a 'play' parameter and starts playing the song if found.
+ */
 function playMusicFromUrl() {
-    const index = getMusicIndexFromUrl();
-    if (index !== null) {
-        // Toca a música apenas se não for a mesma já tocando e se o player não estiver ativo
-        // ou se for a mesma mas estiver pausada e a URL indica para tocar
-        if (index !== currentTrackIndex || audio.paused) {
-            playTrack(index);
+    const params = new URLSearchParams(window.location.search);
+    const songToPlayTitle = params.get('play');
+    if (songToPlayTitle) {
+        const songIndex = musicData.findIndex(song => song.titulo === songToPlayTitle);
+        if (songIndex !== -1) {
+            // A brief delay helps ensure the browser is ready to play audio automatically.
+            setTimeout(() => playTrack(songIndex), 200);
         }
     }
 }
 
-// --- Funções de Controle do Player ---
+// --- Player Control Functions ---
 
-// Toca uma música pelo índice
 function playTrack(index) {
-    // Valida o índice em relação ao musicData completo
-    if (index < 0 || index >= musicData.length) {
-        console.error("Índice de música inválido:", index);
-        return;
-    }
+    if (index < 0 || index >= musicData.length) return;
 
     currentTrackIndex = index;
-    const musica = musicData[currentTrackIndex]; // Pega a música do array original
-
-    audio.src = musica.arquivo; // Usa o caminho completo do JSON
-    audio.play();
+    const musica = musicData[currentTrackIndex];
+    
+    audio.src = musica.arquivo;
+    audio.play().catch(e => console.error("Erro ao iniciar a reprodução:", e));
 
     currentSongDisplay.textContent = musica.titulo;
     updatePlayButton(true);
-    updatePlayingIndicator(currentTrackIndex); // Destaca a música na lista
-    updateUrlForMusic(index); // <-- Atualiza a URL aqui
-
-    // Resetar e atualizar tempos e barra de progresso
-    progressBar.value = 0;
-    currentTimeDisplay.textContent = '0:00';
-    totalTimeDisplay.textContent = '0:00'; // Será atualizado no 'loadedmetadata'
-
-    console.log(`Tocando: ${musica.titulo}`);
 }
 
-// Alterna entre play e pause
 function togglePlayPause() {
     if (audio.paused) {
-        if (currentTrackIndex === -1 && musicData.length > 0) {
-            // Se nada foi tocado ainda, toca a primeira música
-            playTrack(0);
-        } else if (currentTrackIndex !== -1) {
-            // Se uma música estava pausada, continua tocando
+        if (currentTrackIndex === -1 && currentlyDisplayedSongs.length > 0) {
+            // If nothing played, play the first visible song
+            const firstSongOriginalIndex = musicData.findIndex(m => m.arquivo === currentlyDisplayedSongs[0].arquivo);
+            playTrack(firstSongOriginalIndex);
+        } else {
             audio.play();
-            updatePlayButton(true);
-            updatePlayingIndicator(currentTrackIndex);
         }
     } else {
         audio.pause();
-        updatePlayButton(false);
-        updatePlayingIndicator(-1); // Remove destaque ao pausar
     }
 }
 
-// Atualiza o ícone do botão play/pause
 function updatePlayButton(isPlaying) {
     const icon = playPauseBtn.querySelector('i');
     icon.className = isPlaying ? 'fas fa-pause' : 'fas fa-play';
+    updatePlayingIndicator(isPlaying ? currentTrackIndex : -1);
 }
 
-// Vai para a próxima música
 function nextTrack() {
-    if (musicData.length === 0) return;
+    if (currentlyDisplayedSongs.length === 0) return;
 
-    let nextIndex = currentTrackIndex + 1;
-    if (nextIndex >= musicData.length) {
-        nextIndex = 0; // Volta para o início (loop)
-    }
+    // Find the current song's position *within the visible list*
+    const currentVisibleIndex = currentlyDisplayedSongs.findIndex(song => musicData.indexOf(song) === currentTrackIndex);
+    
+    const nextVisibleIndex = (currentVisibleIndex + 1) % currentlyDisplayedSongs.length;
+    const nextSong = currentlyDisplayedSongs[nextVisibleIndex];
 
-    playTrack(nextIndex);
+    // Find the original index of the next song to play it
+    const nextOriginalIndex = musicData.indexOf(nextSong);
+    playTrack(nextOriginalIndex);
 }
 
-// Vai para a música anterior
 function prevTrack() {
-    if (musicData.length === 0) return;
+    if (currentlyDisplayedSongs.length === 0) return;
 
-    let prevIndex = currentTrackIndex - 1;
-    if (prevIndex < 0) {
-        prevIndex = musicData.length - 1; // Volta para o fim (loop)
-    }
-
-    playTrack(prevIndex);
+    const currentVisibleIndex = currentlyDisplayedSongs.findIndex(song => musicData.indexOf(song) === currentTrackIndex);
+    
+    const prevVisibleIndex = (currentVisibleIndex - 1 + currentlyDisplayedSongs.length) % currentlyDisplayedSongs.length;
+    const prevSong = currentlyDisplayedSongs[prevVisibleIndex];
+    
+    const prevOriginalIndex = musicData.indexOf(prevSong);
+    playTrack(prevOriginalIndex);
 }
 
-// Atualiza o indicador visual da música tocando na lista
 function updatePlayingIndicator(playingIndex) {
-    document.querySelectorAll('.music-item').forEach((item) => {
-        const itemIndex = parseInt(item.getAttribute('data-index'));
-        if (itemIndex === playingIndex) {
-            item.classList.add('active'); // Adiciona uma classe 'active'
-        } else {
-            item.classList.remove('active'); // Remove a classe de outros itens
-        }
+    document.querySelectorAll('.music-item').forEach(item => {
+        item.classList.toggle('active', parseInt(item.dataset.index) === playingIndex);
     });
 }
 
-// --- Inicialização e Event Listeners ---
+function updateVolumeIcon() {
+    const icon = volumeIconBtn.querySelector('i');
+    if (audio.muted || audio.volume === 0) {
+        icon.className = 'fas fa-volume-mute';
+    } else if (audio.volume < 0.5) {
+        icon.className = 'fas fa-volume-down';
+    } else {
+        icon.className = 'fas fa-volume-up';
+    }
+}
 
-// Inicializa os controles do player e adiciona listeners
+// --- Initialization and Event Listeners ---
+
 function initPlayerControls() {
-    // Evento delegado para cliques nos itens da lista de músicas
-    musicGrid.addEventListener('click', function(event) {
-        const musicItem = event.target.closest('.music-item'); // Encontra o item clicado
-        if (!musicItem) return; // Sai se não clicou em um item de música
-
-        // Ignora cliques nos botões de ação dentro do item (download/share)
-        if (event.target.closest('.download-btn') || event.target.closest('.share-music-btn')) {
-             return;
-        }
-
-        const index = parseInt(musicItem.getAttribute('data-index'));
-
-        if (index === currentTrackIndex && !audio.paused) {
-            // Se a mesma música estiver tocando, pausa
-            togglePlayPause();
-        } else if (index === currentTrackIndex && audio.paused) {
-             // Se a mesma música estiver pausada, toca
-            togglePlayPause();
-        }
-        else {
-            // Toca uma nova música
-            playTrack(index);
-        }
+    musicGrid.addEventListener('click', (event) => {
+        const musicItem = event.target.closest('.music-item');
+        if (!musicItem || event.target.closest('.music-actions')) return;
+        const index = parseInt(musicItem.dataset.index);
+        if (index === currentTrackIndex) togglePlayPause();
+        else playTrack(index);
     });
 
-    // Botões do player fixo
     playPauseBtn.addEventListener('click', togglePlayPause);
     prevTrackBtn.addEventListener('click', prevTrack);
     nextTrackBtn.addEventListener('click', nextTrack);
 
-    // Barra de progresso
+    audio.addEventListener('play', () => updatePlayButton(true));
+    audio.addEventListener('pause', () => updatePlayButton(false));
+    audio.addEventListener('ended', nextTrack);
     audio.addEventListener('timeupdate', () => {
-        const { currentTime, duration } = audio;
-        progressBar.value = (currentTime / duration) * 100 || 0;
-        currentTimeDisplay.textContent = formatTime(currentTime);
+        if (!isNaN(audio.duration)) {
+            progressBar.value = (audio.currentTime / audio.duration) * 100 || 0;
+            currentTimeDisplay.textContent = formatTime(audio.currentTime);
+        }
     });
-
-    // Atualiza a barra de progresso e o tempo total quando a metadata é carregada
     audio.addEventListener('loadedmetadata', () => {
-         totalTimeDisplay.textContent = formatTime(audio.duration);
-         progressBar.max = 100; // Garante que o max é 100 para o cálculo de %
+        totalTimeDisplay.textContent = formatTime(audio.duration);
     });
-
+    audio.addEventListener('error', (e) => {
+        console.error("Erro de áudio:", e);
+        currentSongDisplay.textContent = "Erro ao carregar música";
+    });
 
     progressBar.addEventListener('input', () => {
-        const seekTime = (progressBar.value / 100) * audio.duration;
-        audio.currentTime = seekTime;
+        if (!isNaN(audio.duration)) audio.currentTime = (progressBar.value / 100) * audio.duration;
     });
 
-    // Quando a música termina
-    audio.addEventListener('ended', () => {
-        console.log("Música terminou. Tocando próxima...");
-        nextTrack(); // Toca a próxima música automaticamente
-    });
-
-    // Controle de Volume
     volumeSlider.addEventListener('input', () => {
-        // Converte o valor do slider (0-100) para o volume do áudio (0.0-1.0)
+        audio.muted = false;
         audio.volume = volumeSlider.value / 100;
+    });
+    volumeIconBtn.addEventListener('click', () => (audio.muted = !audio.muted));
+    audio.addEventListener('volumechange', () => {
+        if (!audio.muted) volumeSlider.value = audio.volume * 100;
         updateVolumeIcon();
     });
 
-    // Inicializa o volume do áudio com o valor do slider
-    audio.volume = volumeSlider.value / 100;
-    updateVolumeIcon(); // Define o ícone inicial do volume
-
-    // Opcional: Mute/Unmute ao clicar no ícone de volume
-    volumeIconBtn.addEventListener('click', () => {
-        if (audio.volume > 0) {
-            audio.muted = true; // Muta o áudio
-            volumeSlider.setAttribute('data-last-volume', volumeSlider.value); // Salva o volume anterior
-            volumeSlider.value = 0; // Move o slider para 0
-        } else {
-            audio.muted = false; // Desmuta
-             // Restaura para o último volume não zero, ou um padrão (ex: 50)
-            const lastVolume = volumeSlider.getAttribute('data-last-volume') || 50;
-            volumeSlider.value = lastVolume;
-            audio.volume = lastVolume / 100;
-        }
-        updateVolumeIcon();
-    });
-
-    // Atualiza o ícone do volume com base no estado/valor
-    function updateVolumeIcon() {
-        const icon = volumeIconBtn.querySelector('i');
-        if (audio.muted || audio.volume === 0) {
-            icon.className = 'fas fa-volume-mute';
-        } else if (audio.volume < 0.5) {
-            icon.className = 'fas fa-volume-down';
-        } else {
-            icon.className = 'fas fa-volume-up';
-        }
-    }
-
-    // Botão de Compartilhar (global para a música atual)
-    const shareBtn = document.getElementById('share');
-    if (navigator.share) { // Verifica se a Web Share API é suportada
-        shareBtn.style.display = 'inline-block'; // Mostra o botão se suportado
-        shareBtn.addEventListener('click', async () => {
-            if (currentTrackIndex === -1) {
-                alert("Selecione uma música para compartilhar.");
-                return;
-            }
-            try {
-                const musica = musicData[currentTrackIndex];
-                await navigator.share({
-                    title: `Ouça: ${musica.titulo} - Guilherme`,
-                    text: `Confira essa música de Guilherme!`,
-                    url: getMusicShareLink(currentTrackIndex) // Usa o link único
-                });
-                console.log('Conteúdo compartilhado com sucesso!');
-            } catch (error) {
-                console.error('Erro ao compartilhar:', error);
-            }
+    if (navigator.share) {
+        mainShareBtn.addEventListener('click', async () => {
+            if (currentTrackIndex === -1) return alert("Selecione uma música para compartilhar.");
+            const musica = musicData[currentTrackIndex];
+            const shareUrl = `${window.location.origin}${window.location.pathname}?play=${encodeURIComponent(musica.titulo)}`;
+            await navigator.share({ title: `Ouça: ${musica.titulo}`, url: shareUrl }).catch(e => console.error(e));
         });
     } else {
-         shareBtn.style.display = 'inline-block'; // Garante que o botão seja visível para o fallback
-         console.log("Web Share API não suportada neste navegador. Usando fallback de cópia.");
-         // Fallback: Copiar para área de transferência para o botão de compartilhamento global
-         shareBtn.addEventListener('click', () => {
-             if (currentTrackIndex === -1) {
-                 alert("Selecione uma música para compartilhar.");
-                 return;
-             }
-             navigator.clipboard.writeText(getMusicShareLink(currentTrackIndex))
-                 .then(() => alert('Link da música atual copiado para a área de transferência! Cole e compartilhe.'))
-                 .catch(() => alert('Não foi possível copiar o link da música atual. Seu navegador pode não suportar esta funcionalidade.'));
-         });
+        mainShareBtn.style.display = 'none';
     }
 
-
-    // Listener para quando o áudio estiver carregando (opcional, para feedback visual)
-    audio.addEventListener('waiting', () => {
-        // Pode adicionar uma classe 'loading' ao player ou item ativo
-        console.log("Carregando áudio...");
-    });
-    audio.addEventListener('playing', () => {
-        // Remove a classe 'loading'
-        console.log("Áudio tocando.");
-    });
-     audio.addEventListener('error', (e) => {
-        console.error("Erro de áudio:", e);
-        currentSongDisplay.textContent = "Erro ao carregar a música";
-        updatePlayButton(false);
-        updatePlayingIndicator(-1);
-        // Pode mostrar uma mensagem de erro mais amigável na UI
-    });
+    audio.volume = volumeSlider.value / 100;
+    updateVolumeIcon();
 }
 
-// Função de download
+// --- Action Functions (called from HTML onclick) ---
+
+function shareSingleTrackLink(event, songTitle) {
+    event.stopPropagation();
+    const url = new URL(window.location.origin + window.location.pathname);
+    url.searchParams.set('play', songTitle); // Set only the play parameter
+
+    navigator.clipboard.writeText(url.href).then(() => {
+        const button = event.currentTarget;
+        const icon = button.querySelector('i');
+        const originalIconClass = icon.className;
+        
+        icon.className = 'fas fa-check';
+        setTimeout(() => { icon.className = originalIconClass; }, 2000);
+    }).catch(err => console.error('Falha ao copiar o link:', err));
+}
+
 function downloadTrack(event, filepath) {
-    event.stopPropagation(); // Impede que o clique no botão de download toque a música
+    event.stopPropagation();
     const link = document.createElement('a');
-    link.href = filepath; // Usa o caminho completo do JSON
-    // Extrai o nome do arquivo do caminho para o nome do download
+    link.href = filepath;
     link.download = filepath.split('/').pop();
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-    console.log(`Download iniciado para: ${filepath}`);
 }
 
-// Função para copiar link da música (para botões individuais na lista)
-function copyMusicLink(event, index) {
-    event.stopPropagation(); // Impede que o clique no botão de copiar toque a música
-    navigator.clipboard.writeText(getMusicShareLink(index))
-        .then(() => {
-            // Feedback visual: Muda o ícone para um 'check' temporariamente
-            const btn = event.target.closest('button');
-            if (btn) { // Garante que o botão foi encontrado
-                const originalIcon = btn.innerHTML; // Salva o HTML original (o ícone)
-                btn.innerHTML = '<i class="fas fa-check"></i>';
-                setTimeout(() => {
-                    btn.innerHTML = originalIcon; // Restaura o ícone original
-                }, 2000);
-            }
-        })
-        .catch(() => alert('Não foi possível copiar o link. Seu navegador pode não suportar esta funcionalidade ou a permissão não foi concedida.'));
-}
-
-
-// Placeholder para setupSearchAndFilters
-function setupSearchAndFilters() {
-    // Esta função será responsável por lidar com a busca e filtros.
-    // Quando implementada, ela modificará o array `filteredMusic` e então chamará `loadMusicListUI()`
-    // para atualizar a exibição da lista.
-    console.log("Configurando busca e filtros (placeholder).");
-    // Exemplo básico de como um filtro poderia funcionar:
-    // const searchInput = document.getElementById('searchInput');
-    // searchInput.addEventListener('input', (e) => {
-    //     const searchTerm = e.target.value.toLowerCase();
-    //     filteredMusic = musicData.filter(musica =>
-    //         musica.titulo.toLowerCase().includes(searchTerm) ||
-    //         musica.genero.toLowerCase().includes(searchTerm)
-    //     );
-    //     loadMusicListUI(); // Recarrega a UI com as músicas filtradas
-    // });
-}
-
-
-// Inicia tudo quando o DOM carregar
-document.addEventListener('DOMContentLoaded', () => {
-    fetchMusicData(); // Começa carregando os dados do JSON
-    setupSearchAndFilters(); // Chama a função para configurar busca e filtros (mesmo que seja um placeholder por enquanto)
-
-    // Verifica a URL ao carregar e quando o hash muda
-    // Usamos 'load' para garantir que musicData esteja carregado antes de tentar tocar
-    window.addEventListener('load', playMusicFromUrl);
-    window.addEventListener('hashchange', playMusicFromUrl);
-});
-
-// Opcional: Registrar Service Worker para PWA (requer um arquivo sw.js)
-// if ('serviceWorker' in navigator) {
-//   window.addEventListener('load', () => {
-//     navigator.serviceWorker.register('/sw.js')
-//       .then(registration => {
-//         console.log('SW registrado: ', registration);
-//       })
-//       .catch(registrationError => {
-//         console.log('SW falhou: ', registrationError);
-//       });
-//   });
-// }
+// --- App Entry Point ---
+document.addEventListener('DOMContentLoaded', fetchMusicData); 
