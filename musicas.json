@@ -4,27 +4,27 @@
       "O mercadinho",
       "Sumi de fininho",
       "Tilanga",
-      "Só tô aceitando pix",
+      "SÃ³ tÃ´ aceitando pix",
       "O bar do primo",
-      "O morto tá de lancha",
+      "O morto tÃ¡ de lancha",
       "18 meses",
-      "Eu sou incêndio",
-      "Não compra não",
-      "Tô fumando crack",
+      "Eu sou incÃªndio",
+      "NÃ£o compra nÃ£o",
+      "TÃ´ fumando crack",
       "Cupido de Wall Street",
       "Motoboy do iFood",
-      "Ô, azar!",
-      "Negão organizado",
+      "Ã”, azar!",
+      "NegÃ£o organizado",
       "Vou te ignorar"
     ],
     "songs": [
       "Eu esperei",
-      "Que nem eu a máquina",
+      "Que nem eu a mÃ¡quina",
       "The Life Snake (A Vida Cobra)",
       "Golpe",
       "Manequim",
       "18 meses",
-      "Tóx",
+      "TÃ³x",
       "fucking Love drogas",
       "Se der errado"
     ]
@@ -52,7 +52,7 @@
       "tags": []
     },
     {
-      "titulo": "Só tô aceitando pix",
+      "titulo": "SÃ³ tÃ´ aceitando pix",
       "arquivo": "audio/so-to-aceitando-pix.mp3",
       "genero": "sertanejo",
       "thumbnail": "thumbnails/default.jpg",
@@ -73,14 +73,14 @@
       "tags": []
     },
     {
-      "titulo": "Eu sou incêndio",
+      "titulo": "Eu sou incÃªndio",
       "arquivo": "audio/eu-sou-incendio.mp3",
       "genero": "sertanejo",
       "thumbnail": "thumbnails/default.jpg",
       "tags": []
     },
     {
-      "titulo": "Não passou da mamada",
+      "titulo": "NÃ£o passou da mamada",
       "arquivo": "audio/nao-passou-da-mamada-v5.mp3",
       "genero": "funk",
       "thumbnail": "thumbnails/default.jpg",
@@ -89,12 +89,12 @@
     {
       "titulo": "Cupido de Wall Street",
       "arquivo": "audio/cupido-de-wall-street.mp3",
-      "genero": "forró vaquejada, pisadinha",
+      "genero": "forrÃ³ vaquejada, pisadinha",
       "thumbnail": "thumbnails/default.jpg",
       "tags": []
     },
     {
-      "titulo": "Tô fumando crack",
+      "titulo": "TÃ´ fumando crack",
       "arquivo": "audio/to-fumando-crack.mp3",
       "genero": "arrocha",
       "thumbnail": "thumbnails/default.jpg",
@@ -103,7 +103,7 @@
     {
       "titulo": "Motoboy do iFood",
       "arquivo": "audio/motoboy-do-ifood.mp3",
-      "genero": "pisadinha, forró eletrônico",
+      "genero": "pisadinha, forrÃ³ eletrÃ´nico",
       "thumbnail": "thumbnails/default.jpg",
       "tags": []
     },
@@ -115,7 +115,7 @@
       "tags": []
     },
     {
-      "titulo": "Te faltou mãe",
+      "titulo": "Te faltou mÃ£e",
       "arquivo": "audio/te-faltou-mae.mp3",
       "genero": "sertanejo",
       "thumbnail": "thumbnails/default.jpg",
@@ -136,7 +136,7 @@
       "tags": []
     },
     {
-      "titulo": "Bololô",
+      "titulo": "BololÃ´",
       "arquivo": "audio/bololo.mp3",
       "genero": "sertanejo",
       "thumbnail": "thumbnails/default.jpg",
@@ -150,37 +150,37 @@
       "tags": []
     },
     {
-      "titulo": "Não compra não",
+      "titulo": "NÃ£o compra nÃ£o",
       "arquivo": "audio/nao-compra-nao.mp3",
       "genero": "sertanejo",
       "thumbnail": "thumbnails/default.jpg",
       "tags": []
     },
     {
-      "titulo": "O morto tá de lancha",
+      "titulo": "O morto tÃ¡ de lancha",
       "arquivo": "audio/o-morto-ta-de-lancha.mp3",
       "genero": "sertanejo, pop",
       "thumbnail": "thumbnails/default.jpg",
       "tags": []
     },
     {
-      "titulo": "Aprendi com você",
+      "titulo": "Aprendi com vocÃª",
       "arquivo": "audio/aprendi-com-voce.mp3",
-      "genero": "sertanejo, forró",
+      "genero": "sertanejo, forrÃ³",
       "thumbnail": "thumbnails/default.jpg",
       "tags": []
     },
     {
-      "titulo": "Ô, azar!",
+      "titulo": "Ã”, azar!",
       "arquivo": "audio/oh-azar.mp3",
-      "genero": "sertanejo, forró",
+      "genero": "sertanejo, forrÃ³",
       "thumbnail": "thumbnails/default.jpg",
       "tags": []
     },
     {
-      "titulo": "Última cerveja",
+      "titulo": "Ãšltima cerveja",
       "arquivo": "audio/ultima-cerveja.mp3",
-      "genero": "sertanejo romântico",
+      "genero": "sertanejo romÃ¢ntico",
       "thumbnail": "thumbnails/default.jpg",
       "tags": []
     },
@@ -199,7 +199,7 @@
       "tags": []
     },
     {
-      "titulo": "Negão organizado",
+      "titulo": "NegÃ£o organizado",
       "arquivo": "audio/negao-organizado.mp3",
       "genero": "pagode",
       "thumbnail": "thumbnails/default.jpg",
@@ -216,6 +216,13 @@
       "titulo": "Marcar de marcar",
       "arquivo": "audio/marcar-de-marcar.mp3",
       "genero": "pagode",
+      "thumbnail": "thumbnails/default.jpg",
+      "tags": []
+    },
+        {
+      "titulo": "Me amarrou",
+      "arquivo": "audio/me-amarrou.mp3",
+      "genero": "forrÃ³",
       "thumbnail": "thumbnails/default.jpg",
       "tags": []
     },
@@ -255,7 +262,7 @@
       "tags": []
     },
     {
-      "titulo": "Gramática do Elevador",
+      "titulo": "GramÃ¡tica do Elevador",
       "arquivo": "audio/gramatica-do-elevador.mp3",
       "genero": "mpb, boogie",
       "thumbnail": "thumbnails/default.jpg",
@@ -304,7 +311,7 @@
       "tags": []
     },
     {
-      "titulo": "Leão",
+      "titulo": "LeÃ£o",
       "arquivo": "audio/leao.mp3",
       "genero": "pop rap, trap",
       "thumbnail": "thumbnails/default.jpg",
@@ -339,14 +346,14 @@
       "tags": []
     },
     {
-      "titulo": "Não escondo nada",
+      "titulo": "NÃ£o escondo nada",
       "arquivo": "audio/nao-escondo-nada.mp3",
       "genero": "post punk, dub",
       "thumbnail": "thumbnails/default.jpg",
       "tags": []
     },
     {
-      "titulo": "Tóx",
+      "titulo": "TÃ³x",
       "arquivo": "audio/tox.mp3",
       "genero": "rock, indie",
       "thumbnail": "thumbnails/default.jpg",
@@ -376,14 +383,42 @@
     {
       "titulo": "Putz",
       "arquivo": "audio/putz.mp3",
-      "genero": "R&B romântico",
+      "genero": "R&B romÃ¢ntico",
       "thumbnail": "thumbnails/default.jpg",
       "tags": []
     },
     {
-      "titulo": "Que nem eu a máquina",
+      "titulo": "Que nem eu a mÃ¡quina",
       "arquivo": "audio/que-nem-eu-a-maquina.mp3",
       "genero": "latin rock, dance rap",
+      "thumbnail": "thumbnails/default.jpg",
+      "tags": []
+    },
+    {
+      "titulo": "TÃ´ fumando pedra v4",
+      "arquivo": "audio/fumando-pedra-sertanejo.mp3",
+      "genero": "sertanejo",
+      "thumbnail": "thumbnails/default.jpg",
+      "tags": []
+    },
+    {
+      "titulo": "Tirano",
+      "arquivo": "audio/tirano.mp3",
+      "genero": "pagode",
+      "thumbnail": "thumbnails/default.jpg",
+      "tags": []
+    },
+    {
+      "titulo": "CoraÃ§Ã£o Mentiroso",
+      "arquivo": "audio/coracao-mentiroso.mp3",
+      "genero": "pagode",
+      "thumbnail": "thumbnails/default.jpg",
+      "tags": []
+    },
+    {
+      "titulo": "Fui assaltado",
+      "arquivo": "audio/assalto-colegio.mp3",
+      "genero": "Indie folk",
       "thumbnail": "thumbnails/default.jpg",
       "tags": []
     }
