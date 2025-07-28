@@ -76,7 +76,9 @@
       "Coração Mentiroso",
       "Fui assaltado",
       "Sei Lá",
-      "Além da máscara"
+      "Além da máscara",
+      "Tô fumando pedra Blues",
+      "Troquei bem, viu?"
     ],
     "bruna": [
       "Queima",
@@ -87,19 +89,18 @@
       "O mercadinho",
       "Sumi de fininho",
       "Só tô aceitando pix",
-      "Atrás da máscara",
-      "Manequim",
+      "Além da máscara",
       "Tilanga",
       "Motoboy do iFood",
       "Negão organizado",
-      "O morto tá de lancha!",
-      "Tô fumando crack"
+      "Tô fumando pedra Blues",
+      "Troquei bem, viu?"
     ]
   },
   "musicas": [
     {
       "titulo": "O mercadinho",
-      "arquivo": "audio/mercadinho.mp3",
+      "arquivo": "audio/o-mercadinho.mp3",
       "genero": "sertanejo",
       "thumbnail": "thumbnails/default.jpg",
       "tags": []
@@ -504,9 +505,23 @@
       "tags": []
     },
     {
-      "titulo": "Atrás da máscara",
-      "arquivo": "audio/atras-da-mascara.mp3",
+      "titulo": "Além da máscara",
+      "arquivo": "audio/alem-da-mascara.mp3",
       "genero": "avant-pop",
+      "thumbnail": "thumbnails/default.jpg",
+      "tags": []
+    },
+    {
+      "titulo": "Tô fumando pedra Blues",
+      "arquivo": "audio/to-fumando-pedra-blues.mp3",
+      "genero": "Blues",
+      "thumbnail": "thumbnails/default.jpg",
+      "tags": []
+    },
+    {
+      "titulo": "Troquei bem, viu?",
+      "arquivo": "audio/troquei-bem-viu.mp3",
+      "genero": "arrocha, sertanejo universitário, pop",
       "thumbnail": "thumbnails/default.jpg",
       "tags": []
     }
