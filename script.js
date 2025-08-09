@@ -107,7 +107,6 @@ function loadMusicListUI(songsToDisplay) {
         musicItem.className = 'music-item';
         musicItem.setAttribute('data-index', originalIndex);
 
-        // MODIFICADO: Adicionado botão de copiar link individual
         musicItem.innerHTML = `
             <div class="music-info">
                 <div>
@@ -128,7 +127,7 @@ function loadMusicListUI(songsToDisplay) {
 }
 
 /**
- * NOVO: Checks URL for a 'play' parameter and starts playing the song if found.
+ * Checks URL for a 'play' parameter and starts playing the song if found.
  */
 function playMusicFromUrl() {
     const params = new URLSearchParams(window.location.search);
@@ -151,12 +150,7 @@ function playTrack(index) {
     const musica = musicData[currentTrackIndex];
     
     audio.src = musica.arquivo;
-    // MODIFICADO: Adicionado .catch() para lidar com erros de autoplay
-    audio.play().catch(e => {
-        console.error("Erro ao iniciar a reprodução automática:", e);
-        // O navegador bloqueou o autoplay. O usuário precisará clicar em play.
-        // A interface já estará preparada para o play manual.
-    });
+    audio.play().catch(e => console.error("Erro ao iniciar a reprodução:", e));
 
     currentSongDisplay.textContent = musica.titulo;
     updatePlayButton(true);
@@ -230,7 +224,6 @@ function updateVolumeIcon() {
 function initPlayerControls() {
     musicGrid.addEventListener('click', (event) => {
         const musicItem = event.target.closest('.music-item');
-        // MODIFICADO: Impede que o clique nos botões de ação (download, share) inicie a música
         if (!musicItem || event.target.closest('.music-actions')) return;
         const index = parseInt(musicItem.dataset.index);
         if (index === currentTrackIndex) togglePlayPause();
@@ -289,42 +282,23 @@ function initPlayerControls() {
 
 // --- Action Functions (called from HTML onclick) ---
 
-/**
- * NOVO: Copia o link direto para uma música para a área de transferência.
- * @param {Event} event - O evento de clique.
- * @param {string} songTitle - O título da música a ser compartilhada.
- */
 function shareSingleTrackLink(event, songTitle) {
-    event.stopPropagation(); // Impede que a música comece a tocar ao clicar no botão
+    event.stopPropagation();
     const url = new URL(window.location.origin + window.location.pathname);
-    url.searchParams.set('play', songTitle); // Define o parâmetro 'play' com o título da música
+    url.searchParams.set('play', songTitle); // Set only the play parameter
 
     navigator.clipboard.writeText(url.href).then(() => {
         const button = event.currentTarget;
         const icon = button.querySelector('i');
         const originalIconClass = icon.className;
         
-        // Feedback visual de sucesso
         icon.className = 'fas fa-check';
-        button.style.color = '#4CAF50'; // Cor verde para sucesso
-
-        setTimeout(() => { 
-            icon.className = originalIconClass; 
-            button.style.color = ''; // Volta à cor original do CSS
-        }, 2000);
-    }).catch(err => {
-        console.error('Falha ao copiar o link:', err);
-        alert('Não foi possível copiar o link.');
-    });
+        setTimeout(() => { icon.className = originalIconClass; }, 2000);
+    }).catch(err => console.error('Falha ao copiar o link:', err));
 }
 
-/**
- * NOVO: Inicia o download de uma faixa de áudio.
- * @param {Event} event - O evento de clique.
- * @param {string} filepath - O caminho para o arquivo de áudio.
- */
 function downloadTrack(event, filepath) {
-    event.stopPropagation(); // Impede que a música comece a tocar ao clicar no botão
+    event.stopPropagation();
     const link = document.createElement('a');
     link.href = filepath;
     link.download = filepath.split('/').pop();
@@ -334,4 +308,4 @@ function downloadTrack(event, filepath) {
 }
 
 // --- App Entry Point ---
-document.addEventListener('DOMContentLoaded', fetchMusicData);
+document.addEventListener('DOMContentLoaded', fetchMusicData); 
